@@ -135,14 +135,14 @@ base class ApiEndpoints {
 //arrow360degree@gmail.com
 
 class _RemoteServer {
-  static const String socketUrl = 'http://187.77.187.56:8082';
+  static const String socketUrl = 'https://fnfd0757-5009.inc1.devtunnels.ms/';
 
-  static const String baseUrl = 'http://187.77.187.56:8082/api/v1';
+  static const String baseUrl = 'https://fnfd0757-5009.inc1.devtunnels.ms/api/v1';
 }
 
 class _LocalHostWifi {
-  static const String socketUrl = 'http://localhost:5001';
-  static const String baseUrl = 'http://localhost:5001/api/v1';
+  static const String socketUrl = 'http://localhost:5009';
+  static const String baseUrl = 'http://localhost:5009/api/v1';
 }
 
 class _Auth {
@@ -151,11 +151,11 @@ class _Auth {
   static const String login = '$_authRoute/login';
   static const String logout = '$_authRoute/logout';
   static const String socialLogin = '$_authRoute/social-login';
-  static const String signup = '$_authRoute/register';
-  static const String forgetPassword = '$_authRoute/password-reset/request';
+  static const String signup = '$_authRoute/signup';
+  static const String forgetPassword = '$_authRoute/forgot-password';
   static const String refreshToken = '$_authRoute/refresh-token';
-  static const String verifyCode = '$_authRoute/password-reset/verify';
-  static const String resetPassword = '$_authRoute/password-reset/reset';
+  static const String verifyCode = '$_authRoute/verify-otp';
+  static const String resetPassword = '$_authRoute/reset-password';
 }
 
 //------------------------------ Help&Support -----------------------------

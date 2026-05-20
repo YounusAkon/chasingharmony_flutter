@@ -61,23 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: ConstrainedBox(
                       constraints: BoxConstraints(minHeight: constraints.maxHeight),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const SizedBox(height: 6),
-                          SizedBox(
-                            height: 28,
-                            child: Row(
-                              children: const [
-                                Spacer(),
-                                Icon(Icons.signal_cellular_alt, size: 14, color: Colors.white),
-                                SizedBox(width: 4),
-                                Icon(Icons.wifi, size: 14, color: Colors.white),
-                                SizedBox(width: 4),
-                                Icon(Icons.battery_full, size: 16, color: Colors.white),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 44),
                           const Center(child: AppLogo()),
                           const SizedBox(height: 38),
                           _buildField(
@@ -181,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   needVerifyAccount: () {},
                                 );
                               },
-                              onDone: () => Get.offAll(() => AppGround()),
+                              onDone: () {},
                             ),
                           ),
                           const SizedBox(height: 12),

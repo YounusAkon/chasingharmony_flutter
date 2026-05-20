@@ -20,8 +20,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
 
   late final SnackbarNotifier snackbarNotifier;
   static const LinearGradient _signupGradient = LinearGradient(
@@ -42,8 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void dispose() {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
-    _phoneController.dispose();
-    _userNameController.dispose();
+    _fullNameController.dispose();
     super.dispose();
   }
 
@@ -79,6 +77,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       constraints: BoxConstraints(minHeight: constraints.maxHeight),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // SizedBox(
                           //   height: 28,
@@ -96,30 +95,30 @@ class _SignupScreenState extends State<SignupScreen> {
                           const SizedBox(height: 44),
                           const Center(child: AppLogo()),
                           const SizedBox(height: 26),
-                          // _buildField(
-                          //   LabeledTextField(
-                          //     title: "auth.userName".tr,
-                          //     hintText: "auth.userNameHint".tr,
-                          //     textSize: 14,
-                          //     titleColor: Colors.white,
-                          //     textColor: Colors.white,
-                          //     hintTextColor: const Color(0xFFA8A3B8),
-                          //     hintTextSize: 13,
-                          //     borderColor: const Color(0xFF8A809E),
-                          //     focusedBorderColor: const Color(0xFFC16BFF),
-                          //     backgroundColor: Colors.white.withValues(alpha: 0.02),
-                          //     borderRadius: 8,
-                          //     height: 46,
-                          //     controller: _userNameController,
-                          //     onChanged: controller.setUsername,
-                          //     validator: (value) {
-                          //       if (value == null || value.trim().isEmpty) {
-                          //         return "auth.enterName".tr;
-                          //       }
-                          //       return null;
-                          //     },
-                          //   ),
-                          // ),
+                          _buildField(
+                            LabeledTextField(
+                              title: "auth.userName".tr,
+                              hintText: "auth.userNameHint".tr,
+                              textSize: 14,
+                              titleColor: Colors.white,
+                              textColor: Colors.white,
+                              hintTextColor: const Color(0xFFA8A3B8),
+                              hintTextSize: 13,
+                              borderColor: const Color(0xFF8A809E),
+                              focusedBorderColor: const Color(0xFFC16BFF),
+                              backgroundColor: Colors.white.withValues(alpha: 0.02),
+                              borderRadius: 8,
+                              height: 46,
+                              controller: _fullNameController,
+                              onChanged: controller.setFullName,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "auth.enterName".tr;
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
                           _buildField(
                             LabeledTextField(
                               title: "auth.yourEmail".tr,
@@ -147,31 +146,6 @@ class _SignupScreenState extends State<SignupScreen> {
                               },
                             ),
                           ),
-                          // _buildField(
-                          //   LabeledTextField(
-                          //     title: "auth.phoneNumber".tr,
-                          //     hintText: "auth.phoneNumberHint".tr,
-                          //     textSize: 14,
-                          //     titleColor: Colors.white,
-                          //     textColor: Colors.white,
-                          //     hintTextColor: const Color(0xFFA8A3B8),
-                          //     hintTextSize: 13,
-                          //     borderColor: const Color(0xFF8A809E),
-                          //     focusedBorderColor: const Color(0xFFC16BFF),
-                          //     backgroundColor: Colors.white.withValues(alpha: 0.02),
-                          //     borderRadius: 8,
-                          //     height: 46,
-                          //     keyboardType: TextInputType.phone,
-                          //     controller: _phoneController,
-                          //     onChanged: controller.setPhoneNumber,
-                          //     validator: (value) {
-                          //       if (value == null || value.trim().isEmpty) {
-                          //         return "auth.enterPhoneNumber".tr;
-                          //       }
-                          //       return null;
-                          //     },
-                          //   ),
-                          // ),
                           _buildField(
                             LabeledTextField(
                               title: "auth.password".tr,
@@ -257,9 +231,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                 controller.signup(
                                   buttonNotifier: controller.processNotifier,
                                   snackbarNotifier: snackbarNotifier,
-                                  onDone: () {
-                                    Get.offAll(() => const LoginScreen());
-                                  },
                                 );
                               },
                               onDone: () {

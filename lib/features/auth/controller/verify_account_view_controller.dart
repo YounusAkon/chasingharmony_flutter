@@ -14,10 +14,11 @@ abstract class VerifyOtpController extends ChangeNotifier {
 
   final SnackbarNotifier snackbarNotifier;
   final String email;
+  String resetToken = '';
 
   VerifyOtpController({required this.email, required this.snackbarNotifier});
 
-  int otpLength = 6;
+  int otpLength = 4;
   String _otp = "";
 
   String get otp => _otp;
@@ -51,7 +52,7 @@ class VerifyForgetPasswordOtpController extends VerifyOtpController {
     prcessNotifier.setLoading();
 
     final result = await authInterface.verifyCode(
-      VerifyOtpParam(email: email, otp: otp),
+      VerifyOtpParam(email: email, code: otp),
     );
 
     handleFold(
@@ -59,12 +60,14 @@ class VerifyForgetPasswordOtpController extends VerifyOtpController {
       processStatusNotifier: prcessNotifier,
       successSnackbarNotifier: snackbarNotifier,
       errorSnackbarNotifier: snackbarNotifier,
+      onSuccess: (token) {
+        resetToken = token;
+      },
     );
 
-    // 🔥 REQUIRED: Mark as Done so button triggers onDone
     result.fold(
       (err) => prcessNotifier.setError(),
-      (success) => prcessNotifier.setSuccess(),
+      (success) {},
     );
   }
 }

@@ -1,39 +1,23 @@
 class SignupModel {
-  final String username;
+  final String fullName;
   final String email;
-  final String phoneNumber;
   final String password;
   final String confirmPassword;
-  final String preferredLanguage;
-  final String? lastName;
 
   SignupModel({
-    required this.username,
+    required this.fullName,
     required this.email,
-    required this.phoneNumber,
     required this.password,
     required this.confirmPassword,
-    this.preferredLanguage = 'en',
-    this.lastName,
   });
 
   Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{
-      'username': username.trim(),
-      'phoneNumber': phoneNumber.trim(),
+    return <String, dynamic>{
+      'fullName': fullName.trim(),
       'email': email.trim(),
       'password': password,
       'confirmPassword': confirmPassword,
-      'preferredLanguage': preferredLanguage.trim().isEmpty
-          ? 'en'
-          : preferredLanguage.trim(),
     };
-
-    if ((lastName ?? '').trim().isNotEmpty) {
-      map['lastName'] = lastName!.trim();
-    }
-
-    return map;
   }
 }
 
@@ -63,11 +47,13 @@ class SignupResponse {
 
 class SignupResponseData {
   final String accessToken;
+  final String refreshToken;
   final String? expiresAt;
   final SignupUser? user;
 
   const SignupResponseData({
     required this.accessToken,
+    required this.refreshToken,
     this.expiresAt,
     this.user,
   });
@@ -79,6 +65,7 @@ class SignupResponseData {
 
     return SignupResponseData(
       accessToken: (map['accessToken'] ?? '').toString(),
+      refreshToken: (map['refreshToken'] ?? '').toString(),
       expiresAt: map['expiresAt']?.toString(),
       user: userMap == null ? null : SignupUser.fromMap(userMap),
     );

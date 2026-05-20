@@ -7,10 +7,9 @@ import '../model/create_new_password_model.dart';
 import '../repo/auth_interface.dart';
 
 class ResetPasswordController extends GetxController {
-  final String email;
-  final String otp;
+  final String resetToken;
 
-  ResetPasswordController({required this.email, required this.otp});
+  ResetPasswordController({required this.resetToken});
 
   final ProcessStatusNotifier processNotifier = ProcessStatusNotifier(
     initialStatus: DisabledStatus(),
@@ -52,10 +51,9 @@ class ResetPasswordController extends GetxController {
     processNotifier.setLoading();
 
     final model = ResetPasswordModel(
-      email: email,
-      password: _newPassword,
+      resetToken: resetToken,
+      newPassword: _newPassword,
       confirmPassword: _confirmPassword,
-      otp: otp,
     );
 
     final result = await Get.find<AuthInterface>().resetPassword(model);
@@ -67,10 +65,9 @@ class ResetPasswordController extends GetxController {
       errorSnackbarNotifier: snackbarNotifier,
     );
 
-    // 🔥 THIS WAS MISSING
     result.fold(
       (l) => processNotifier.setError(),
-      (r) => processNotifier.setSuccess(),
+      (r) {},
     );
   }
 }

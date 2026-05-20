@@ -18,6 +18,7 @@ import '../model/forget_password_model.dart';
 import '../model/login_request_model.dart';
 import '../model/signup_model.dart';
 import '../model/verify_account_param.dart';
+import '../model/verify_otp_param.dart';
 
 final class AuthInterfaceImpl extends AuthInterface {
   static const String googleLoginCancelledMessage =
@@ -94,7 +95,7 @@ final class AuthInterfaceImpl extends AuthInterface {
       tryFunc: () async {
         final response = await appPigeon.post(
           ApiEndpoints.signup,
-          data: FormData.fromMap(params.toMap()),
+          data: params.toMap(),
           options: appLanguageOptions(),
         );
 
@@ -107,6 +108,7 @@ final class AuthInterfaceImpl extends AuthInterface {
 
         final signupUser = signupResponse.data?.user;
         final accessToken = signupResponse.data?.accessToken ?? '';
+        final refreshToken = signupResponse.data?.refreshToken ?? '';
         if (signupUser != null && accessToken.isNotEmpty) {
           if (Get.isRegistered<AppLanguageController>()) {
             await Get.find<AppLanguageController>().syncFromBackendValue(
@@ -117,7 +119,7 @@ final class AuthInterfaceImpl extends AuthInterface {
             saveAuthParams: SaveNewAuthParams(
               uid: signupUser.id,
               accessToken: accessToken,
-              refreshToken: '',
+              refreshToken: refreshToken,
               data: {
                 "userId": signupUser.id,
                 "name": signupUser.fullName.isNotEmpty
@@ -177,7 +179,7 @@ final class AuthInterfaceImpl extends AuthInterface {
   }
 
   @override
-  FutureRequest<Success> verifyCode(param) async {
+  FutureRequest<Success<String>> verifyCode(VerifyOtpParam param) async {
     return await asyncTryCatch(
       tryFunc: () async {
         final response = await appPigeon.post(
@@ -186,7 +188,14 @@ final class AuthInterfaceImpl extends AuthInterface {
           options: appLanguageOptions(),
         );
         final body = response.data;
-        return Success(message: body['message'] ?? 'OTP verified');
+        final data = body is Map && body['data'] is Map
+            ? Map<String, dynamic>.from(body['data'] as Map)
+            : <String, dynamic>{};
+
+        return Success<String>(
+          message: body['message'] ?? 'OTP verified',
+          data: (data['resetToken'] ?? '').toString(),
+        );
       },
     );
   }
