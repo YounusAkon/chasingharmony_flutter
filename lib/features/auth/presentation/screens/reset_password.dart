@@ -35,18 +35,6 @@ class ResetPassword extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.asset('assets/image/backgroundimage.png', fit: BoxFit.cover),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  _backgroundTop.withValues(alpha: 0.9),
-                  _backgroundBottom.withValues(alpha: 0.96),
-                ],
-              ),
-            ),
-          ),
           SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -59,7 +47,7 @@ class ResetPassword extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const SizedBox(height: 34),
-                        const Center(child: AppLogo(height: 86, width: 112)),
+                        const Center(child: AppLogo()),
                         const SizedBox(height: 54),
                         const Center(
                           child: Text(

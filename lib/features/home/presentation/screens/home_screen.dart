@@ -3,12 +3,9 @@ import 'package:chasingharmony_fluttere/core/theme/app_colors.dart';
 import 'package:chasingharmony_fluttere/features/home/controller/safety_tips_controller.dart';
 import 'package:chasingharmony_fluttere/features/home/model/safety_tips_model.dart';
 import 'package:chasingharmony_fluttere/features/home/presentation/screens/safety_tips_details.dart';
-import 'package:chasingharmony_fluttere/features/home/services/home_sercices/home_interface.dart';
-import 'package:chasingharmony_fluttere/features/messages/controller/message_controller.dart';
 import 'package:chasingharmony_fluttere/features/notification/presentation/notification_screen.dart';
 import 'package:chasingharmony_fluttere/features/onbording/common/app_logo.dart';
 import 'package:chasingharmony_fluttere/features/profile/controller/get_profile_controller.dart';
-import 'package:chasingharmony_fluttere/features/profile/presentation/screens/my_Profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -149,7 +146,7 @@ class HomeScreen extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         InkWell(
-          onTap: () => Get.to(() => MyProfileScreen()),
+          onTap: () => Get.find<AppGroundController>().changeTab(2),
           borderRadius: BorderRadius.circular(999),
           child: Obx(
             () => _buildProfileAvatar(
@@ -749,23 +746,4 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class _EmergencyItem {
-  final String label;
-  final String initialMessage;
-  final String? emoji;
-  final String? assetPath;
-  final List<Color> colors;
-
-  const _EmergencyItem({
-    required this.label,
-    required this.initialMessage,
-    this.emoji,
-    this.assetPath,
-    required this.colors,
-  }) : assert(
-         (emoji == null) != (assetPath == null),
-         'Provide either emoji or assetPath, not both.',
-       );
 }

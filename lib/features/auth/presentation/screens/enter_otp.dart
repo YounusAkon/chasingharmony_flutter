@@ -24,8 +24,6 @@ class _EnterOtpState extends State<EnterOtp> {
     end: Alignment.centerRight,
     colors: [Color(0xFF45A5FF), Color(0xFFC026FF)],
   );
-  static const Color _backgroundTop = Color(0xFF090113);
-  static const Color _backgroundBottom = Color(0xFF040109);
   static const Color _fieldBorder = Color(0xFF8F00FF);
   static const Color _hintText = Color(0xFFDAD4E6);
 
@@ -137,18 +135,6 @@ class _EnterOtpState extends State<EnterOtp> {
         fit: StackFit.expand,
         children: [
           Image.asset('assets/image/backgroundimage.png', fit: BoxFit.cover),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  _backgroundTop.withValues(alpha: 0.9),
-                  _backgroundBottom.withValues(alpha: 0.96),
-                ],
-              ),
-            ),
-          ),
           SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -160,7 +146,7 @@ class _EnterOtpState extends State<EnterOtp> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const SizedBox(height: 34),
-                        const AppLogo(height: 86, width: 112),
+                        const AppLogo(),
                         const SizedBox(height: 54),
                         const Text(
                           'Code',

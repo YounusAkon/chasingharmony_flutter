@@ -38,18 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
         fit: StackFit.expand,
         children: [
           Image.asset('assets/image/backgroundimage.png', fit: BoxFit.cover),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  _bgTop.withValues(alpha: 0.9),
-                  _bgBottom.withValues(alpha: 0.96),
-                ],
-              ),
-            ),
-          ),
           SafeArea(
             child: Form(
               key: _formKey,
