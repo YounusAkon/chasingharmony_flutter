@@ -1,5 +1,5 @@
 import 'package:chasingharmony_fluttere/core/theme/app_colors.dart';
-import 'package:chasingharmony_fluttere/features/onbording/language_screen.dart';
+import 'package:chasingharmony_fluttere/features/onbording/welcomescreen.dart';
 import 'package:chasingharmony_fluttere/features/profile/controller/get_profile_controller.dart';
 import 'package:chasingharmony_fluttere/features/profile/presentation/screens/change_password.dart';
 import 'package:chasingharmony_fluttere/features/profile/presentation/screens/faq_screen.dart';
@@ -89,7 +89,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         title: 'profile.language'.tr,
                         icon: Icons.language_rounded,
                         onTap: () {
-                          Get.to(() => const LanguageScreen(fromProfile: true));
+                          Get.to(() => const Scaffold());
                         },
                       ),
                       // _divider(),

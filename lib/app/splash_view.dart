@@ -1,8 +1,8 @@
 import 'dart:async';
+
 import 'package:app_pigeon/app_pigeon.dart';
 import 'package:chasingharmony_fluttere/app/app_manager.dart';
 import 'package:chasingharmony_fluttere/features/app_ground.dart';
-import 'package:chasingharmony_fluttere/features/onbording/common/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +16,9 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  static const Color _bgTop = Color(0xFF090113);
+  static const Color _bgBottom = Color(0xFF040109);
+
   late Timer timer;
 
   @override
@@ -50,6 +53,80 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: AppLogo()));
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/image/backgroundimage.png',
+            fit: BoxFit.cover,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  _bgTop.withValues(alpha: 0.94),
+                  _bgBottom.withValues(alpha: 0.98),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 150,
+            left: 48,
+            right: 48,
+            child: IgnorePointer(
+              child: Container(
+                height: 220,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(200),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFA020F0).withValues(alpha: 0.25),
+                      blurRadius: 70,
+                      spreadRadius: 10,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 42),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 240,
+                    child: Image.asset(
+                      'assets/logo/logo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    width: 182,
+                    height: 2,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(999),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.transparent,
+                          Color(0xFFB87CFF),
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

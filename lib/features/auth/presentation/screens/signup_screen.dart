@@ -1,6 +1,5 @@
 import 'package:chasingharmony_fluttere/core/common/widget/reactive_button/save_button.dart';
 import 'package:chasingharmony_fluttere/core/notifiers/snackbar_notifier.dart';
-import 'package:chasingharmony_fluttere/core/theme/app_colors.dart';
 import 'package:chasingharmony_fluttere/features/auth/controller/sign_up_controller.dart';
 import 'package:chasingharmony_fluttere/features/auth/presentation/screens/login_screen.dart';
 import 'package:chasingharmony_fluttere/features/onbording/common/app_logo.dart';
@@ -22,8 +21,16 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
 
   late final SnackbarNotifier snackbarNotifier;
+  static const LinearGradient _signupGradient = LinearGradient(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: [Color(0xFF45A5FF), Color(0xFFC026FF)],
+  );
+  static const Color _bgTop = Color(0xFF090113);
+  static const Color _bgBottom = Color(0xFF040109);
 
   @override
   void initState() {
@@ -36,200 +43,201 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     _phoneController.dispose();
+    _userNameController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.authBackground,
       resizeToAvoidBottomInset: true,
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset('assets/image/backgroundimage.png', fit: BoxFit.cover),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  _bgTop.withValues(alpha: 0.9),
+                  _bgBottom.withValues(alpha: 0.96),
+                ],
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Form(
+              key: _formKey,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    padding: const EdgeInsets.fromLTRB(14, 14, 14, 24),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: constraints.maxHeight),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 24),
-                          const Center(child: AppLogo(height: 44, width: 130)),
-                          const SizedBox(height: 20),
-                          Center(
-                            child: Text(
-                              "auth.signupHero".tr,
-                              style: TextStyle(
-                                color: AppColors.authHeading,
-                                fontSize: 27,
-                                fontWeight: FontWeight.w600,
-                              ),
+                          // SizedBox(
+                          //   height: 28,
+                          //   child: Row(
+                          //     children: const [
+                          //       Spacer(),
+                          //       Icon(Icons.signal_cellular_alt, size: 14, color: Colors.white),
+                          //       SizedBox(width: 4),
+                          //       Icon(Icons.wifi, size: 14, color: Colors.white),
+                          //       SizedBox(width: 4),
+                          //       Icon(Icons.battery_full, size: 16, color: Colors.white),
+                          //     ],
+                          //   ),
+                          // ),
+                          const SizedBox(height: 44),
+                          const Center(child: AppLogo()),
+                          const SizedBox(height: 26),
+                          // _buildField(
+                          //   LabeledTextField(
+                          //     title: "auth.userName".tr,
+                          //     hintText: "auth.userNameHint".tr,
+                          //     textSize: 14,
+                          //     titleColor: Colors.white,
+                          //     textColor: Colors.white,
+                          //     hintTextColor: const Color(0xFFA8A3B8),
+                          //     hintTextSize: 13,
+                          //     borderColor: const Color(0xFF8A809E),
+                          //     focusedBorderColor: const Color(0xFFC16BFF),
+                          //     backgroundColor: Colors.white.withValues(alpha: 0.02),
+                          //     borderRadius: 8,
+                          //     height: 46,
+                          //     controller: _userNameController,
+                          //     onChanged: controller.setUsername,
+                          //     validator: (value) {
+                          //       if (value == null || value.trim().isEmpty) {
+                          //         return "auth.enterName".tr;
+                          //       }
+                          //       return null;
+                          //     },
+                          //   ),
+                          // ),
+                          _buildField(
+                            LabeledTextField(
+                              title: "auth.yourEmail".tr,
+                              hintText: "you@gmail.com",
+                              textSize: 14,
+                              titleColor: Colors.white,
+                              textColor: Colors.white,
+                              hintTextColor: const Color(0xFFA8A3B8),
+                              hintTextSize: 13,
+                              borderColor: const Color(0xFF8A809E),
+                              focusedBorderColor: const Color(0xFFC16BFF),
+                              backgroundColor: Colors.white.withValues(alpha: 0.02),
+                              borderRadius: 8,
+                              height: 46,
+                              keyboardType: TextInputType.emailAddress,
+                              onChanged: controller.setEmail,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "auth.pleaseEnterEmail".tr;
+                                }
+                                if (!GetUtils.isEmail(value)) {
+                                  return "auth.invalidEmail".tr;
+                                }
+                                return null;
+                              },
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          Center(
-                            child: Text(
-                              "auth.createAccount".tr,
-                              style: TextStyle(
-                                color: AppColors.authSubtitle,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          // _buildField(
+                          //   LabeledTextField(
+                          //     title: "auth.phoneNumber".tr,
+                          //     hintText: "auth.phoneNumberHint".tr,
+                          //     textSize: 14,
+                          //     titleColor: Colors.white,
+                          //     textColor: Colors.white,
+                          //     hintTextColor: const Color(0xFFA8A3B8),
+                          //     hintTextSize: 13,
+                          //     borderColor: const Color(0xFF8A809E),
+                          //     focusedBorderColor: const Color(0xFFC16BFF),
+                          //     backgroundColor: Colors.white.withValues(alpha: 0.02),
+                          //     borderRadius: 8,
+                          //     height: 46,
+                          //     keyboardType: TextInputType.phone,
+                          //     controller: _phoneController,
+                          //     onChanged: controller.setPhoneNumber,
+                          //     validator: (value) {
+                          //       if (value == null || value.trim().isEmpty) {
+                          //         return "auth.enterPhoneNumber".tr;
+                          //       }
+                          //       return null;
+                          //     },
+                          //   ),
+                          // ),
+                          _buildField(
+                            LabeledTextField(
+                              title: "auth.password".tr,
+                              hintText: "********",
+                              textSize: 14,
+                              titleColor: Colors.white,
+                              textColor: Colors.white,
+                              hintTextColor: const Color(0xFFA8A3B8),
+                              hintTextSize: 13,
+                              borderColor: const Color(0xFF8A809E),
+                              focusedBorderColor: const Color(0xFFC16BFF),
+                              backgroundColor: Colors.white.withValues(alpha: 0.02),
+                              borderRadius: 8,
+                              height: 46,
+                              isPassword: true,
+                              passwordHiddenColor: Colors.white70,
+                              passwordVisibleColor: const Color(0xFFC16BFF),
+                              controller: _passwordController,
+                              onChanged: controller.setPassword,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "auth.enterPassword".tr;
+                                }
+                                if (value.length < 6) {
+                                  return "auth.minimumSixCharacters".tr;
+                                }
+                                return null;
+                              },
                             ),
                           ),
-                          const SizedBox(height: 12),
-                          LabeledTextField(
-                            title: "auth.userName".tr,
-                            hintText: "auth.userNameHint".tr,
-                            textSize: 14,
-                            titleColor: AppColors.authHeading,
-                            textColor: AppColors.authHeading,
-                            hintTextColor: AppColors.authFieldHint,
-                            hintTextSize: 13,
-                            borderColor: AppColors.authFieldBorder,
-                            focusedBorderColor: AppColors.authPrimaryRed,
-                            backgroundColor: Colors.white,
-                            borderRadius: 6,
-                            height: 46,
-                            prefixIcon: Icons.person_outline,
-                            prefixIconColor: AppColors.authFieldHint,
-                            prefixIconSize: 18,
-                            onChanged: controller.setUsername,
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "auth.enterName".tr;
-                              }
-                              return null;
-                            },
+                          _buildField(
+                            LabeledTextField(
+                              title: "auth.confirmPassword".tr,
+                              hintText: "********",
+                              textSize: 14,
+                              titleColor: Colors.white,
+                              textColor: Colors.white,
+                              hintTextColor: const Color(0xFFA8A3B8),
+                              hintTextSize: 13,
+                              borderColor: const Color(0xFF8A809E),
+                              focusedBorderColor: const Color(0xFFC16BFF),
+                              backgroundColor: Colors.white.withValues(alpha: 0.02),
+                              borderRadius: 8,
+                              height: 46,
+                              isPassword: true,
+                              passwordHiddenColor: Colors.white70,
+                              passwordVisibleColor: const Color(0xFFC16BFF),
+                              controller: _confirmPasswordController,
+                              onChanged: controller.setConfirmPassword,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "auth.confirmYourPassword".tr;
+                                }
+                                if (value != _passwordController.text) {
+                                  return "auth.passwordsDoNotMatch".tr;
+                                }
+                                return null;
+                              },
+                            ),
                           ),
-                          LabeledTextField(
-                            title: "auth.yourEmail".tr,
-                            hintText: "auth.loginEmailHint".tr,
-                            textSize: 14,
-                            titleColor: AppColors.authHeading,
-                            textColor: AppColors.authHeading,
-                            hintTextColor: AppColors.authFieldHint,
-                            hintTextSize: 13,
-                            borderColor: AppColors.authFieldBorder,
-                            focusedBorderColor: AppColors.authPrimaryRed,
-                            backgroundColor: Colors.white,
-                            borderRadius: 6,
-                            height: 46,
-                            prefixIcon: Icons.email_outlined,
-                            prefixIconColor: AppColors.authFieldHint,
-                            prefixIconSize: 18,
-                            keyboardType: TextInputType.emailAddress,
-                            onChanged: controller.setEmail,
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "auth.pleaseEnterEmail".tr;
-                              }
-                              if (!GetUtils.isEmail(value)) {
-                                return "auth.invalidEmail".tr;
-                              }
-                              return null;
-                            },
-                          ),
-                          LabeledTextField(
-                            title: "auth.phoneNumber".tr,
-                            hintText: "auth.phoneNumberHint".tr,
-                            textSize: 14,
-                            titleColor: AppColors.authHeading,
-                            textColor: AppColors.authHeading,
-                            hintTextColor: AppColors.authFieldHint,
-                            hintTextSize: 13,
-                            borderColor: AppColors.authFieldBorder,
-                            focusedBorderColor: AppColors.authPrimaryRed,
-                            backgroundColor: Colors.white,
-                            borderRadius: 6,
-                            height: 46,
-                            prefixIcon: Icons.phone_outlined,
-                            prefixIconColor: AppColors.authFieldHint,
-                            prefixIconSize: 18,
-                            keyboardType: TextInputType.phone,
-                            controller: _phoneController,
-                            onChanged: controller.setPhoneNumber,
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "auth.enterPhoneNumber".tr;
-                              }
-                              return null;
-                            },
-                          ),
-                          LabeledTextField(
-                            title: "auth.password".tr,
-                            hintText: "auth.passwordHint".tr,
-                            textSize: 14,
-                            titleColor: AppColors.authHeading,
-                            textColor: AppColors.authHeading,
-                            hintTextColor: AppColors.authFieldHint,
-                            hintTextSize: 13,
-                            borderColor: AppColors.authFieldBorder,
-                            focusedBorderColor: AppColors.authPrimaryRed,
-                            backgroundColor: Colors.white,
-                            borderRadius: 6,
-                            height: 46,
-                            prefixIcon: Icons.lock_outline,
-                            prefixIconColor: AppColors.authFieldHint,
-                            prefixIconSize: 18,
-                            isPassword: true,
-                            passwordHiddenColor: AppColors.authFieldHint,
-                            passwordVisibleColor: AppColors.authFieldHint,
-                            controller: _passwordController,
-                            onChanged: controller.setPassword,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "auth.enterPassword".tr;
-                              }
-                              if (value.length < 6) {
-                                return "auth.minimumSixCharacters".tr;
-                              }
-                              return null;
-                            },
-                          ),
-                          LabeledTextField(
-                            title: "auth.confirmPassword".tr,
-                            hintText: "auth.confirmPasswordHint".tr,
-                            textSize: 14,
-                            titleColor: AppColors.authHeading,
-                            textColor: AppColors.authHeading,
-                            hintTextColor: AppColors.authFieldHint,
-                            hintTextSize: 13,
-                            borderColor: AppColors.authFieldBorder,
-                            focusedBorderColor: AppColors.authPrimaryRed,
-                            backgroundColor: Colors.white,
-                            borderRadius: 6,
-                            height: 46,
-                            prefixIcon: Icons.lock_outline,
-                            prefixIconColor: AppColors.authFieldHint,
-                            prefixIconSize: 18,
-                            isPassword: true,
-                            passwordHiddenColor: AppColors.authFieldHint,
-                            passwordVisibleColor: AppColors.authFieldHint,
-                            controller: _confirmPasswordController,
-                            onChanged: controller.setConfirmPassword,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "auth.confirmYourPassword".tr;
-                              }
-                              if (value != _passwordController.text) {
-                                return "auth.passwordsDoNotMatch".tr;
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 6),
+                          const SizedBox(height: 8),
                           SizedBox(
                             width: double.infinity,
-                            height: 48,
+                            height: 56,
                             child: RSaveButton(
-                              key: null,
+                              key: const ValueKey('signup_button'),
                               saveText: "auth.signUp".tr,
                               loadingText: "auth.creatingAccount".tr,
                               doneText: "auth.accountCreated".tr,
@@ -239,13 +247,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
-                              borderRadius: BorderRadius.circular(8),
-                              enabledBackgroundColor: AppColors.authPrimaryRed,
-                              loadingBackgroundColor: AppColors.authPrimaryRed,
-                              errorBackgroundColor: AppColors.authPrimaryRed,
-                              successBackgroundColor: AppColors.authPrimaryRed,
-                              disabledBackgroundColor:
-                                  AppColors.authButtonDisabled,
+                              backgroundGradient: _signupGradient,
+                              borderRadius: BorderRadius.circular(10),
+                              disabledBackgroundColor: Colors.white.withValues(alpha: 0.1),
                               buttonStatusNotifier: controller.processNotifier,
                               onSaveTap: () {
                                 if (!_formKey.currentState!.validate()) return;
@@ -263,16 +267,17 @@ class _SignupScreenState extends State<SignupScreen> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 12),
                           Center(
                             child: Wrap(
                               crossAxisAlignment: WrapCrossAlignment.center,
+                              alignment: WrapAlignment.center,
                               children: [
-                                Text(
-                                  "auth.haveAccount".tr,
+                                const Text(
+                                  'Already have an account?',
                                   style: TextStyle(
-                                    color: AppColors.authHeading,
-                                    fontSize: 14,
+                                    color: Color(0xFFD8D3E5),
+                                    fontSize: 13,
                                   ),
                                 ),
                                 TextButton(
@@ -281,18 +286,14 @@ class _SignupScreenState extends State<SignupScreen> {
                                   },
                                   style: TextButton.styleFrom(
                                     minimumSize: Size.zero,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 4,
-                                      vertical: 0,
-                                    ),
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
+                                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   ),
-                                  child: Text(
-                                    "auth.signInHere".tr,
+                                  child: const Text(
+                                    'Sign In',
                                     style: TextStyle(
-                                      color: AppColors.authLinkBlue,
-                                      fontSize: 14,
+                                      color: Color(0xFFC026FF),
+                                      fontSize: 13,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -300,18 +301,30 @@ class _SignupScreenState extends State<SignupScreen> {
                               ],
                             ),
                           ),
-                          const Spacer(),
-                          const SizedBox(height: 10),
                         ],
                       ),
                     ),
-                  ),
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildField(Widget child) {
+    return Theme(
+      data: ThemeData(
+        inputDecorationTheme: const InputDecorationTheme(
+          errorStyle: TextStyle(
+            color: Color(0xFFFF9CC7),
+            fontSize: 11,
           ),
         ),
       ),
+      child: child,
     );
   }
 }

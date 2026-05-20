@@ -16,6 +16,7 @@ class RSaveButton extends StatefulWidget {
   final String doneText;
   final VoidCallback onSaveTap;
   final VoidCallback onDone;
+  final Gradient? backgroundGradient;
   const RSaveButton({
     required super.key,
     this.height,
@@ -26,6 +27,7 @@ class RSaveButton extends StatefulWidget {
     this.loadingText = "Saving",
     this.errorText = "Error",
     this.doneText = "Done",
+    this.backgroundGradient,
     required this.buttonStatusNotifier,
     required this.onSaveTap,
     required this.onDone,
@@ -81,12 +83,27 @@ class _RSaveButtonState extends State<RSaveButton> {
           height: widget.height ?? 52,
           width: widget.width ?? constraints.maxWidth,
           decoration: BoxDecoration(
+            gradient: switch (buttonStatusNotifier.status) {
+              EnabledStatus _ => widget.backgroundGradient,
+              DisabledStatus _ => null,
+              LoadingStatus _ => widget.backgroundGradient,
+              ErrorStatus _ => widget.backgroundGradient,
+              SuccessStatus _ => widget.backgroundGradient,
+            },
             color: switch (buttonStatusNotifier.status) {
-              EnabledStatus _ => AppColors.primarybutton,
+              EnabledStatus _ => widget.backgroundGradient == null
+                  ? AppColors.primarybutton
+                  : null,
               DisabledStatus _ => AppColors.buttonInactiveTextColor,
-              LoadingStatus _ => AppColors.buttonInactiveTextColor,
-              ErrorStatus _ => AppColors.buttonInactiveTextColor,
-              SuccessStatus _ => AppColors.buttonInactiveTextColor,
+              LoadingStatus _ => widget.backgroundGradient == null
+                  ? AppColors.primarybutton
+                  : null,
+              ErrorStatus _ => widget.backgroundGradient == null
+                  ? AppColors.primarybutton
+                  : null,
+              SuccessStatus _ => widget.backgroundGradient == null
+                  ? AppColors.primarybutton
+                  : null,
             },
             borderRadius: widget.borderRadius ?? BorderRadius.circular(20),
           ),
