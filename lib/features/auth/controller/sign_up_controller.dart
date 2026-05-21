@@ -17,22 +17,22 @@ class SignUpController extends GetxController {
 
   void setFullName(String value) {
     fullName.value = value;
-    processNotifier.setEnabled();
+    // processNotifier.setEnabled();
   }
 
   void setEmail(String value) {
     email.value = value;
-    processNotifier.setEnabled();
+    // processNotifier.setEnabled();
   }
 
   void setPassword(String value) {
     password.value = value;
-    processNotifier.setEnabled();
+    // processNotifier.setEnabled();
   }
 
   void setConfirmPassword(String value) {
     confirmPassword.value = value;
-    processNotifier.setEnabled();
+    // processNotifier.setEnabled();
   }
 
   SignupModel get signupModel => SignupModel(

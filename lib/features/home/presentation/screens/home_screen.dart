@@ -1,7 +1,15 @@
+import 'package:chasingharmony_fluttere/app/controller/app_ground_controller.dart';
+import 'package:chasingharmony_fluttere/features/messages/presentation/widget/mode_select_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  void _startChat() {
+    Get.find<AppGroundController>().changeTab(1);
+    MoodSelectionDialog.show();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                         color: Colors.transparent,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(16),
-                          onTap: () {},
+                          onTap: _startChat,
                           child: const Center(
                             child: Text(
                               'Start Chat',

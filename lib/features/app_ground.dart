@@ -1,5 +1,6 @@
 import 'package:chasingharmony_fluttere/app/controller/app_ground_controller.dart';
 import 'package:chasingharmony_fluttere/features/home/presentation/screens/home_screen.dart';
+import 'package:chasingharmony_fluttere/features/messages/presentation/screen/message_screen.dart';
 import 'package:chasingharmony_fluttere/features/profile/presentation/screens/my_Profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ class AppGround extends StatelessWidget {
 
   final List<Widget> pages = [
     const HomeScreen(),
-    const Scaffold(backgroundColor: Color.fromARGB(255, 238, 12, 12)),
+    const CelysChatScreen(),
     const MyProfileScreen(),
   ];
 

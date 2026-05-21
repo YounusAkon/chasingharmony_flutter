@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:app_pigeon/app_pigeon.dart';
 import 'package:chasingharmony_fluttere/core/utils/helpers/format_response_data.dart';
 import 'package:chasingharmony_fluttere/features/profile/repo/profile_interface.dart';
+import 'package:get/get.dart' hide FormData, Response, MultipartFile;
 import '../../../core/api_handler/success.dart';
 import '../../../core/constants/api_endpoints.dart';
 import '../../../core/helpers/typedefs.dart';
@@ -32,6 +34,10 @@ final class ProfileInterfaceImpl extends ProfilInterface {
 
     if (rawData == null) {
       throw Exception('No data in response');
+    }
+
+    if (rawData is Map && rawData['user'] is Map) {
+      return Map<String, dynamic>.from(rawData['user'] as Map);
     }
 
     if (rawData is Map && rawData['publicUser'] is Map) {
@@ -72,7 +78,7 @@ final class ProfileInterfaceImpl extends ProfilInterface {
       tryFunc: () async {
         final response = await appPigeon.patch(
           ApiEndpoints.updateProfile,
-          data: param.toFormData(),
+          data: param.toJson(),
           options: appLanguageOptions(),
         );
 
@@ -83,6 +89,89 @@ final class ProfileInterfaceImpl extends ProfilInterface {
           data: updatedProfile,
           message:
               extractSuccessMessage(response) ?? "Profile updated successfully",
+        );
+      },
+    );
+  }
+
+  @override
+  FutureRequest<Success<Avatar>> uploadAvatar(File imageFile) async {
+    return await asyncTryCatch(
+      tryFunc: () async {
+        // Multipart uploads do NOT go through AuthorizedPigeon. Reason:
+        // FormData is a one-shot stream — if the pigeon's interceptor catches
+        // a 401 and retries after refresh, the FormData body is already
+        // consumed, the retried request becomes empty, and (worse) a failed
+        // refresh clears auth and logs the user out. We instead read the
+        // current access token, attach it manually, and use a fresh Dio.
+        final authorizedPigeon = Get.find<AuthorizedPigeon>();
+        final auth = await authorizedPigeon.getCurrentAuthRecord();
+        final accessToken = auth?.toJson()['access_token']?.toString();
+        if (accessToken == null || accessToken.isEmpty) {
+          throw Exception('Not authenticated');
+        }
+
+        final filename = imageFile.path.split('/').last;
+        final extension = filename.contains('.')
+            ? filename.split('.').last.toLowerCase()
+            : 'jpg';
+        final mimeType = switch (extension) {
+          'png' => 'image/png',
+          'webp' => 'image/webp',
+          'heic' => 'image/heic',
+          'gif' => 'image/gif',
+          _ => 'image/jpeg',
+        };
+
+        final formData = FormData.fromMap({
+          'avatar': await MultipartFile.fromFile(
+            imageFile.path,
+            filename: filename,
+            contentType: DioMediaType.parse(mimeType),
+          ),
+        });
+
+        final headers = <String, dynamic>{
+          'Authorization': 'Bearer $accessToken',
+        };
+        final languageHeaders = appLanguageOptions()?.headers;
+        if (languageHeaders != null) headers.addAll(languageHeaders);
+
+        final uploadDio = Dio(
+          BaseOptions(
+            connectTimeout: const Duration(seconds: 60),
+            receiveTimeout: const Duration(seconds: 60),
+            sendTimeout: const Duration(seconds: 60),
+            validateStatus: (status) => status != null && status < 500,
+          ),
+        );
+
+        final response = await uploadDio.post(
+          ApiEndpoints.uploadAvatar,
+          data: formData,
+          options: Options(headers: headers),
+        );
+
+        if (response.statusCode == null || response.statusCode! >= 400) {
+          final body = response.data;
+          final message = body is Map
+              ? (body['message']?.toString() ?? 'Upload failed')
+              : 'Upload failed (status ${response.statusCode})';
+          throw Exception(message);
+        }
+
+        final body = _asMapBody(response.data);
+        final rawData = body['data'];
+        Avatar parsedAvatar = Avatar();
+        if (rawData is Map && rawData['avatar'] is Map) {
+          parsedAvatar = Avatar.fromJson(
+            Map<String, dynamic>.from(rawData['avatar'] as Map),
+          );
+        }
+
+        return Success(
+          data: parsedAvatar,
+          message: body['message']?.toString() ?? 'Avatar uploaded successfully',
         );
       },
     );

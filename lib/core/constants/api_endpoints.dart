@@ -75,6 +75,7 @@ base class ApiEndpoints {
   /// ### get
   static String getuserbyId = _User.getuserbyId;
   static String updateProfile = _User.updateProfile;
+  static String uploadAvatar = _User.uploadAvatar;
   static String changePassword = _User.changePassword;
   static String userPreferences = _User.preferences;
 
@@ -221,6 +222,7 @@ class _User {
   static const String _userRoute = '${ApiEndpoints.baseUrl}/users';
   static String getuserbyId = '$_userRoute/me';
   static String updateProfile = '$_userRoute/me';
+  static String uploadAvatar = '$_userRoute/me/avatar';
   static String changePassword = '$_userRoute/me/password';
   static String preferences = '$_userRoute/me/preferences';
 }
