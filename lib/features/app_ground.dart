@@ -39,9 +39,14 @@ class AppGround extends StatelessWidget {
           child: Container(
             height: 76,
             decoration: BoxDecoration(
-              color: const Color(0xFF131525),//background color of the bottom navigation bar
+              color: const Color(
+                0xFF131525,
+              ), //background color of the bottom navigation bar
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFF7B809C), width: 1),//border color and width of the bottom navigation bar
+              border: Border.all(
+                color: const Color(0xFF7B809C),
+                width: 1,
+              ), //border color and width of the bottom navigation bar
             ),
             child: Obx(
               () => Row(
@@ -53,13 +58,12 @@ class AppGround extends StatelessWidget {
                       behavior: HitTestBehavior.opaque,
                       child: isSelected
                           ? Container(
-                              margin: const EdgeInsets.all(6),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 6,
+                              ),
                               decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [Color(0xFF8B52E0), Color(0xFF5B2EAA)],
-                                ),
+                                color: Color(0xFF600A8D),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Column(

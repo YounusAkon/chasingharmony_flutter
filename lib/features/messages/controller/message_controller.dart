@@ -596,19 +596,6 @@ class MessageController extends GetxController {
     return '$_safetyTipConversationKeyPrefix$safetyTipKey';
   }
 
-  String _safetyTipKeyFor({required String tipId, required String tipTitle}) {
-    final normalizedTipId = tipId.trim();
-    if (normalizedTipId.isNotEmpty) {
-      return normalizedTipId;
-    }
-
-    final normalizedTitle = tipTitle
-        .trim()
-        .toLowerCase()
-        .replaceAll(RegExp(r'[^a-z0-9]+'), '_')
-        .replaceAll(RegExp(r'^_+|_+$'), '');
-    return normalizedTitle.isEmpty ? 'unknown_safety_tip' : normalizedTitle;
-  }
 
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {

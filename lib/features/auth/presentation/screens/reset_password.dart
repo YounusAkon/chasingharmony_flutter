@@ -17,8 +17,6 @@ class ResetPassword extends StatelessWidget {
     end: Alignment.centerRight,
     colors: [Color(0xFF45A5FF), Color(0xFFC026FF)],
   );
-  static const Color _backgroundTop = Color(0xFF090113);
-  static const Color _backgroundBottom = Color(0xFF040109);
   static const Color _fieldBorder = Color(0xFFFFFFFF);
   static const Color _hintText = Color(0xFFDAD4E6);
   static const Color _suffixIcon = Color(0xFFF2EFF7);

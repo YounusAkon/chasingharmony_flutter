@@ -23,9 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
     end: Alignment.centerRight,
     colors: [Color(0xFF45A5FF), Color(0xFFC026FF)],
   );
-  static const Color _bgTop = Color(0xFF090113);
-  static const Color _bgBottom = Color(0xFF040109);
-
   @override
   Widget build(BuildContext context) {
     final LoginController controller = Get.put(
