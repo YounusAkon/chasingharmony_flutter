@@ -25,42 +25,14 @@ base class ApiEndpoints {
   static const String sendReport = _Report.sendReport;
 
   //------------notification----------------
-  /// ### get
   static const String getAllNotifications = _Notification.getAllNotifications;
   static const String readAllNotifications = _Notification.readAllNotifications;
-
-  //------------checklist----------------
-  /// ### get
-  static const String getAllChecklistItems = _Checklist.getAllChecklistItems;
-
-  static String getChecklistItemById(String id) =>
-      _Checklist.getChecklistItemById(id);
-
-  /// ### patch
-  static String toggleChecklistItemCompletion({
-    required String checklistId,
-    required String itemId,
-  }) => _Checklist.toggleChecklistItemCompletion(
-    checklistId: checklistId,
-    itemId: itemId,
-  );
-  static const String createChecklist = _Checklist.createChecklist;
-  static String updateChecklistById(String id) =>
-      _Checklist.updateChecklistById(id);
-  static String deleteChecklistById(String id) =>
-      _Checklist.deleteChecklistById(id);
-
-  //-------------safety tips----------------
-  static const String getAllSafetyTips = _SafetyTips.getAllSafetyTips;
-  static String getSafetyTipById(String id) => _SafetyTips.getSafetyTipById(id);
-
-  /// ### patch
   static String markNotificationAsRead({required String notificationId}) =>
       _Notification.markNotificationAsRead(notificationId);
-
-  /// ### patch
   static const String markAllAsRead = _Notification.markAllAsRead;
 
+  //---------------------- mode -----------------------------
+  static const String getAllMode = _Mode.getAllMode;
   //----------------------chat----------------
 
   /// ### get
@@ -196,18 +168,9 @@ class _Notification {
   static const String getAllNotifications = '$_notificationRoute/';
 }
 
-class _Checklist {
-  static const String _checklistRoute = '${ApiEndpoints.baseUrl}/checklists';
-  static const String getAllChecklistItems = '$_checklistRoute/';
-  static String getChecklistItemById(String id) => '$_checklistRoute/$id';
-
-  static String toggleChecklistItemCompletion({
-    required String checklistId,
-    required String itemId,
-  }) => '$_checklistRoute/$checklistId/items/$itemId';
-  static const String createChecklist = _checklistRoute;
-  static String updateChecklistById(String id) => '$_checklistRoute/$id';
-  static String deleteChecklistById(String id) => '$_checklistRoute/$id';
+class _Mode {
+  static const String _modeRoute = '${ApiEndpoints.baseUrl}/mood';
+  static const String getAllMode = '$_modeRoute/options';
 }
 
 //---------------------- Safety Tips -----------------------------

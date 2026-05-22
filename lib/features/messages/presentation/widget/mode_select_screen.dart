@@ -1,3 +1,4 @@
+import 'package:chasingharmony_fluttere/features/messages/controller/mode_select_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,13 +7,7 @@ import 'package:get/get.dart';
 class MoodSelectionDialog extends StatefulWidget {
   const MoodSelectionDialog({super.key, this.onContinue});
 
-  /// Called with the selected mood title when the user taps "Continue to Chat".
-  /// If null, the dialog just closes after selection.
   final ValueChanged<String>? onContinue;
-
-  /// Shows the mood picker as a styled rounded dialog using GetX's root
-  /// navigator so it's safe to call from a widget that's about to be disposed
-  /// (e.g. after switching bottom-nav tabs).
   static Future<String?> show({ValueChanged<String>? onContinue}) {
     return Get.dialog<String>(
       Dialog(
@@ -38,74 +33,47 @@ class MoodSelectionDialog extends StatefulWidget {
 }
 
 class _MoodSelectionDialogState extends State<MoodSelectionDialog> {
+  late final ModeSelectController _controller = Get.find<ModeSelectController>();
   String? _selectedMood;
 
-  static const List<MoodOption> _moods = [
-    MoodOption(
-      emoji: '😊',
-      title: 'Good',
-      color: Color(0xFF22C55E),
-      description: 'Feeling positive and energized',
-    ),
-    MoodOption(
-      emoji: '😄',
-      title: 'Happy',
-      color: Color(0xFFFFB020),
-      description: 'Feeling cheerful and motivated',
-    ),
-    MoodOption(
-      emoji: '😟',
-      title: 'Stressed',
-      color: Color(0xFFFF8A3D),
-      description: 'Feeling pressured or anxious',
-    ),
-    MoodOption(
-      emoji: '😣',
-      title: 'Overwhelmed',
-      color: Color(0xFFEF4444),
-      description: 'Struggling to cope',
-    ),
-    MoodOption(
-      emoji: '🥱',
-      title: 'Tired',
-      color: Color(0xFF8B5CF6),
-      description: 'Mentally and emotionally drained',
-    ),
-    MoodOption(
-      emoji: '😐',
-      title: 'Neutral',
-      color: Color(0xFF38BDF8),
-      description: 'Feeling okay, nothing strong',
-    ),
-    MoodOption(
-      emoji: '🙁',
-      title: 'Sad',
-      color: Color(0xFF14B8A6),
-      description: 'Feeling down or low',
-    ),
-    MoodOption(
-      emoji: '😠',
-      title: 'Angry',
-      color: Color(0xFFEC4899),
-      description: 'Frustrated or irritated',
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _controller.ensureModesLoaded();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildHeader(context),
-          const SizedBox(height: 14),
-          Flexible(child: _buildGrid()),
-          const SizedBox(height: 14),
-          _buildContinueButton(context),
-        ],
-      ),
-    );
+    return Obx(() {
+      final moods = _controller.feelings
+          .map(MoodOption.fromBackendValue)
+          .toList(growable: false);
+      final selectedMood = moods.any((mood) => mood.value == _selectedMood)
+          ? _selectedMood
+          : null;
+
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildHeader(context),
+            const SizedBox(height: 14),
+            Flexible(
+              child: _buildBody(
+                moods: moods,
+                selectedMood: selectedMood,
+              ),
+            ),
+            const SizedBox(height: 14),
+            _buildContinueButton(
+              context,
+              selectedMood: selectedMood,
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Widget _buildHeader(BuildContext context) {
@@ -161,31 +129,109 @@ class _MoodSelectionDialogState extends State<MoodSelectionDialog> {
     );
   }
 
-  Widget _buildGrid() {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.95,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-      ),
-      itemCount: _moods.length,
-      itemBuilder: (context, index) {
-        final mood = _moods[index];
-        final isSelected = _selectedMood == mood.title;
-        return _MoodCard(
-          mood: mood,
-          isSelected: isSelected,
-          onTap: () => setState(() => _selectedMood = mood.title),
-        );
-      },
+  Widget _buildBody({
+    required List<MoodOption> moods,
+    required String? selectedMood,
+  }) {
+    if (_controller.isLoading.value && moods.isEmpty) {
+      return const SizedBox(
+        height: 280,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFF8B5CF6),
+          ),
+        ),
+      );
+    }
+
+    if (_controller.error.value.isNotEmpty && moods.isEmpty) {
+      return SizedBox(
+        height: 280,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  _controller.error.value,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xFF9CA3AF),
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: () => _controller.loadModes(),
+                  child: const Text(
+                    'Retry',
+                    style: TextStyle(color: Color(0xFFB100FF)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (moods.isEmpty) {
+      return const SizedBox(
+        height: 280,
+        child: Center(
+          child: Text(
+            'No mood options available right now.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xFF9CA3AF),
+              fontSize: 13,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return _buildMoodGrid(
+      moods: moods,
+      selectedMood: selectedMood,
     );
   }
 
-  Widget _buildContinueButton(BuildContext context) {
-    final enabled = _selectedMood != null;
+  Widget _buildMoodGrid({
+    required List<MoodOption> moods,
+    required String? selectedMood,
+  }) {
+    return Scrollbar(
+      thumbVisibility: moods.length > 6,
+      child: GridView.builder(
+        physics: const BouncingScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.95,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+        ),
+        itemCount: moods.length,
+        itemBuilder: (context, index) {
+          final mood = moods[index];
+          final isSelected = selectedMood == mood.value;
+          return _MoodCard(
+            mood: mood,
+            isSelected: isSelected,
+            onTap: () => setState(() => _selectedMood = mood.value),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildContinueButton(
+    BuildContext context, {
+    required String? selectedMood,
+  }) {
+    final activeMood = selectedMood;
+    final enabled = activeMood != null;
     return SizedBox(
       width: double.infinity,
       height: 52,
@@ -202,9 +248,8 @@ class _MoodSelectionDialogState extends State<MoodSelectionDialog> {
             borderRadius: BorderRadius.circular(14),
             onTap: enabled
                 ? () {
-                    final mood = _selectedMood!;
-                    Get.back<String>(result: mood);
-                    widget.onContinue?.call(mood);
+                    Get.back<String>(result: activeMood);
+                    widget.onContinue?.call(activeMood);
                   }
                 : null,
             child: Opacity(
@@ -319,14 +364,105 @@ class MoodSelectionScreen extends StatelessWidget {
 
 class MoodOption {
   const MoodOption({
+    required this.value,
     required this.emoji,
     required this.title,
     required this.color,
     required this.description,
   });
 
+  final String value;
   final String emoji;
   final String title;
   final Color color;
   final String description;
+
+  factory MoodOption.fromBackendValue(String value) {
+    switch (value.trim().toLowerCase()) {
+      case 'good':
+        return const MoodOption(
+          value: 'good',
+          emoji: '😊',
+          title: 'Good',
+          color: Color(0xFF22C55E),
+          description: 'Feeling positive and energized',
+        );
+      case 'happy':
+        return const MoodOption(
+          value: 'happy',
+          emoji: '😄',
+          title: 'Happy',
+          color: Color(0xFFFFB020),
+          description: 'Feeling cheerful and motivated',
+        );
+      case 'stressed':
+        return const MoodOption(
+          value: 'stressed',
+          emoji: '😟',
+          title: 'Stressed',
+          color: Color(0xFFFF8A3D),
+          description: 'Feeling pressured or anxious',
+        );
+      case 'overwhelmed':
+        return const MoodOption(
+          value: 'overwhelmed',
+          emoji: '😣',
+          title: 'Overwhelmed',
+          color: Color(0xFFEF4444),
+          description: 'Struggling to cope',
+        );
+      case 'tired':
+        return const MoodOption(
+          value: 'tired',
+          emoji: '🥱',
+          title: 'Tired',
+          color: Color(0xFF8B5CF6),
+          description: 'Mentally and emotionally drained',
+        );
+      case 'neutral':
+        return const MoodOption(
+          value: 'neutral',
+          emoji: '😐',
+          title: 'Neutral',
+          color: Color(0xFF38BDF8),
+          description: 'Feeling okay, nothing strong',
+        );
+      case 'sad':
+        return const MoodOption(
+          value: 'sad',
+          emoji: '🙁',
+          title: 'Sad',
+          color: Color(0xFF14B8A6),
+          description: 'Feeling down or low',
+        );
+      case 'angry':
+        return const MoodOption(
+          value: 'angry',
+          emoji: '😠',
+          title: 'Angry',
+          color: Color(0xFFEC4899),
+          description: 'Frustrated or irritated',
+        );
+      default:
+        return MoodOption(
+          value: value,
+          emoji: '🙂',
+          title: _formatMoodLabel(value),
+          color: const Color(0xFF8B5CF6),
+          description: 'Take a moment to check in with how you feel.',
+        );
+    }
+  }
+
+  static String _formatMoodLabel(String value) {
+    return value
+        .trim()
+        .split('_')
+        .where((part) => part.isNotEmpty)
+        .map((part) {
+          final lower = part.toLowerCase();
+          return '${lower[0].toUpperCase()}${lower.substring(1)}';
+        })
+        .join(' ');
+  }
 }
