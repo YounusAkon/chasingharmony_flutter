@@ -1,4 +1,5 @@
 import 'package:chasingharmony_fluttere/app/controller/app_ground_controller.dart';
+import 'package:chasingharmony_fluttere/features/home/presentation/screens/crisis_support_screen.dart';
 import 'package:chasingharmony_fluttere/features/messages/presentation/widget/mode_select_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,10 +41,15 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image(
-                        image: AssetImage('assets/logo/Frame1.png'),
-                        width: 40,
-                        height: 40,
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => CrisisSupportScreen());
+                        },
+                        child: Image.asset(
+                          'assets/logo/Frame1.png',
+                          width: 40,
+                          height: 40,
+                        ),
                       ),
 
                       Container(

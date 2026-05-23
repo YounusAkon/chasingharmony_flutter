@@ -13,7 +13,7 @@ class ChangePasswordModel {
     return {
       'currentPassword': currentPassword,
       'newPassword': newPassword,
-      'confirmNewPassword': confirmPassword,
+      'confirmPassword': confirmPassword,
     };
   }
 }

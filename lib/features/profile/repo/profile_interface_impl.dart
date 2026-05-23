@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:app_pigeon/app_pigeon.dart';
+import 'package:chasingharmony_fluttere/core/localization/app_language_controller.dart';
 import 'package:chasingharmony_fluttere/core/utils/helpers/format_response_data.dart';
 import 'package:chasingharmony_fluttere/features/profile/repo/profile_interface.dart';
 import 'package:get/get.dart' hide FormData, Response, MultipartFile;
@@ -181,11 +182,58 @@ final class ProfileInterfaceImpl extends ProfilInterface {
   FutureRequest<Success> changePassword(ChangePasswordModel param) async {
     return await asyncTryCatch(
       tryFunc: () async {
-        final response = await appPigeon.patch(
+        final response = await appPigeon.post(
           ApiEndpoints.changePassword,
           data: param.toJson(),
           options: appLanguageOptions(),
         );
+        final body = _asMapBody(response.data);
+        final rawData = body['data'];
+
+        if (rawData is Map) {
+          final data = Map<String, dynamic>.from(rawData);
+          final userData = data['user'] is Map
+              ? Map<String, dynamic>.from(data['user'] as Map)
+              : const <String, dynamic>{};
+          final accessToken = data['accessToken']?.toString() ?? '';
+          final refreshToken = data['refreshToken']?.toString() ?? '';
+          final userId =
+              userData['_id']?.toString() ??
+              userData['id']?.toString() ??
+              '';
+
+          if (userId.isNotEmpty &&
+              accessToken.isNotEmpty &&
+              refreshToken.isNotEmpty &&
+              Get.isRegistered<AuthorizedPigeon>()) {
+            final preferredLanguage =
+                userData['preferredLanguage']?.toString() ??
+                userData['language']?.toString();
+
+            if (preferredLanguage != null &&
+                preferredLanguage.trim().isNotEmpty &&
+                Get.isRegistered<AppLanguageController>()) {
+              await Get.find<AppLanguageController>().syncFromBackendValue(
+                preferredLanguage,
+              );
+            }
+
+            await Get.find<AuthorizedPigeon>().saveNewAuth(
+              saveAuthParams: SaveNewAuthParams(
+                uid: userId,
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+                data: {
+                  'userId': userId,
+                  'name': userData['fullName']?.toString() ?? '',
+                  'email': userData['email']?.toString() ?? '',
+                  'role': userData['role']?.toString() ?? 'user',
+                  'preferredLanguage': preferredLanguage,
+                },
+              ),
+            );
+          }
+        }
 
         return Success(
           data: null,

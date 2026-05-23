@@ -1,4 +1,5 @@
 import 'package:chasingharmony_fluttere/features/messages/controller/mode_select_controller.dart';
+import 'package:chasingharmony_fluttere/features/messages/presentation/widget/mood_intake_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -247,9 +248,15 @@ class _MoodSelectionDialogState extends State<MoodSelectionDialog> {
           child: InkWell(
             borderRadius: BorderRadius.circular(14),
             onTap: enabled
-                ? () {
-                    Get.back<String>(result: activeMood);
-                    widget.onContinue?.call(activeMood);
+                ? () async {
+                    final String mood = activeMood;
+
+                    Get.back<String>(result: mood);
+                    widget.onContinue?.call(mood);
+                    await Future<void>.delayed(Duration.zero);
+                    if (Get.isDialogOpen != true) {
+                      await MoodIntakeDialog.show();
+                    }
                   }
                 : null,
             child: Opacity(

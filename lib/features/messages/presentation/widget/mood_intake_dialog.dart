@@ -4,8 +4,6 @@ import 'package:chasingharmony_fluttere/features/messages/controller/mode_select
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-/// Result returned when the user completes (or partially fills) the
-/// mood-intake flow shown after picking a mood.
 class MoodIntakeResult {
   const MoodIntakeResult({
     required this.intensity,
@@ -21,15 +19,8 @@ class MoodIntakeResult {
   final String? duration;
   final String? support;
 }
-
-/// Multi-step intake dialog opened from the chat screen's reaction icon.
-/// Steps: intensity → triggers → duration → support type. Left/right arrows
-/// in the header move between steps without losing state.
 class MoodIntakeDialog extends StatefulWidget {
   const MoodIntakeDialog({super.key});
-
-  /// Fixed dialog dimensions so the box doesn't resize between steps.
-  /// Clamped to the screen so small phones don't overflow.
   static const double _dialogWidth = 360;
   static const double _dialogHeight = 600;
 

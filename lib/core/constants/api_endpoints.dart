@@ -15,6 +15,7 @@ base class ApiEndpoints {
   static const String forgetPassword = _Auth.forgetPassword;
   static const String createNewPassword = _Auth.resetPassword;
   static const String refreshToken = _Auth.refreshToken;
+  static const String changePassword = _Auth.changePassword;
   static const String helpSupport = _HelpSupport.helpSupport;
   static const String getInterests = _Interest.getallInterests;
   static const String verification = _Verification.verification;
@@ -48,7 +49,6 @@ base class ApiEndpoints {
   static String getuserbyId = _User.getuserbyId;
   static String updateProfile = _User.updateProfile;
   static String uploadAvatar = _User.uploadAvatar;
-  static String changePassword = _User.changePassword;
   static String userPreferences = _User.preferences;
 
   // ---------------------- Products -----------------------------
@@ -129,6 +129,7 @@ class _Auth {
   static const String refreshToken = '$_authRoute/refresh-token';
   static const String verifyCode = '$_authRoute/verify-otp';
   static const String resetPassword = '$_authRoute/reset-password';
+  static const String changePassword = '$_authRoute/change-password';
 }
 
 //------------------------------ Help&Support -----------------------------
@@ -186,7 +187,6 @@ class _User {
   static String getuserbyId = '$_userRoute/me';
   static String updateProfile = '$_userRoute/me';
   static String uploadAvatar = '$_userRoute/me/avatar';
-  static String changePassword = '$_userRoute/me/password';
   static String preferences = '$_userRoute/me/preferences';
 }
 

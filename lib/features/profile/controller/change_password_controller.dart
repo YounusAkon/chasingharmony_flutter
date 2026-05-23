@@ -16,6 +16,26 @@ class ChangePasswordController extends GetxController {
   String _newPass = '';
   String _confirmPass = '';
 
+  bool get hasCurrentPassword => _oldPass.trim().isNotEmpty;
+  bool get hasMinLength => _newPass.length >= 8;
+  bool get hasUppercase => RegExp(r'[A-Z]').hasMatch(_newPass);
+  bool get hasLowercase => RegExp(r'[a-z]').hasMatch(_newPass);
+  bool get hasDigit => RegExp(r'\d').hasMatch(_newPass);
+  bool get hasSpecialCharacter =>
+      RegExp(r'[^A-Za-z0-9\s]').hasMatch(_newPass);
+  bool get hasNoSpaces => !RegExp(r'\s').hasMatch(_newPass);
+  bool get passwordsMatch =>
+      _confirmPass.isNotEmpty && _confirmPass == _newPass;
+  bool get canSubmit =>
+      hasCurrentPassword &&
+      hasMinLength &&
+      hasUppercase &&
+      hasLowercase &&
+      hasDigit &&
+      hasSpecialCharacter &&
+      hasNoSpaces &&
+      passwordsMatch;
+
   set currentPassword(String value) {
     _oldPass = value;
     _validate();
@@ -32,10 +52,7 @@ class ChangePasswordController extends GetxController {
   }
 
   void _validate() {
-    if (_oldPass.isNotEmpty &&
-        _newPass.isNotEmpty &&
-        _newPass.length >= 6 &&
-        _confirmPass == _newPass) {
+    if (canSubmit) {
       processNotifier.setEnabled();
     } else {
       processNotifier.setDisabled();
@@ -43,6 +60,7 @@ class ChangePasswordController extends GetxController {
   }
 
   Future<void> changePassword() async {
+    if (processNotifier.status is LoadingStatus || !canSubmit) return;
     processNotifier.setLoading();
 
     final param = ChangePasswordModel(

@@ -1,9 +1,13 @@
+// ignore_for_file: file_names
+
 import 'dart:io';
 
 import 'package:chasingharmony_fluttere/features/auth/presentation/screens/login_screen.dart';
 import 'package:chasingharmony_fluttere/features/auth/repo/auth_interface.dart';
 import 'package:chasingharmony_fluttere/features/profile/controller/edit_profile_controller.dart';
 import 'package:chasingharmony_fluttere/features/profile/controller/get_profile_controller.dart';
+import 'package:chasingharmony_fluttere/features/profile/presentation/screens/change_password_screen.dart';
+import 'package:chasingharmony_fluttere/features/profile/presentation/screens/subscription_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -508,13 +512,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         _menuTile(
           title: 'profile.changePassword'.tr,
           icon: Icons.lock_outline_rounded,
-          onTap: () => Get.to(() => const Scaffold()),
+          onTap: ChangePasswordScreen.show,
         ),
         const SizedBox(height: 12),
         _menuTile(
           title: 'Subscription',
           icon: Icons.auto_awesome_outlined,
-          onTap: () {},
+          onTap: () {
+            Get.to(() => const SubscriptionPlansScreen());
+          },
         ),
       ],
     );
