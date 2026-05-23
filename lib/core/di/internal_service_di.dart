@@ -6,8 +6,7 @@ import '../../app/controller/app_ground_controller.dart';
 import '../../features/auth/repo/auth_interface.dart';
 import '../../features/auth/repo/auth_interface_impl.dart';
 import '../../features/home/controller/safety_tips_controller.dart';
-import '../../features/home/services/home_sercices/home_interface.dart';
-import '../../features/home/services/home_sercices/home_interface_impl.dart';
+import '../../features/messages/controller/chat_flow_controller.dart';
 import '../../features/messages/controller/mode_select_controller.dart';
 import '../../features/messages/services/message_int.dart';
 import '../../features/messages/services/message_interface_impl.dart';
@@ -61,16 +60,16 @@ Future<void> initServices() async {
     () => NotificationController(notificationInterface: Get.find()),
     fenix: true,
   );
-  Get.lazyPut<HomeInterface>(
-    () => HomeInterfaceImpl(appPigeon: Get.find<AppPigeon>()),
-    fenix: true,
-  );
   Get.lazyPut<MessageInt>(
     () => MessageInterfaceImpl(appPigeon: Get.find<AppPigeon>()),
     fenix: true,
   );
   Get.lazyPut<ModeSelectController>(
     () => ModeSelectController(messageInt: Get.find<MessageInt>()),
+    fenix: true,
+  );
+  Get.lazyPut<ChatFlowController>(
+    () => ChatFlowController(messageInt: Get.find<MessageInt>()),
     fenix: true,
   );
   Get.lazyPut<SafetyTipsController>(

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:chasingharmony_fluttere/features/messages/controller/chat_flow_controller.dart';
 import 'package:chasingharmony_fluttere/features/messages/controller/mode_select_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,12 +20,18 @@ class MoodIntakeResult {
   final String? duration;
   final String? support;
 }
+
 class MoodIntakeDialog extends StatefulWidget {
-  const MoodIntakeDialog({super.key});
+  const MoodIntakeDialog({
+    super.key,
+    required this.feeling,
+  });
+
+  final String feeling;
   static const double _dialogWidth = 360;
   static const double _dialogHeight = 600;
 
-  static Future<MoodIntakeResult?> show() {
+  static Future<MoodIntakeResult?> show({required String feeling}) {
     return Get.dialog<MoodIntakeResult>(
       Builder(
         builder: (context) {
@@ -50,7 +57,7 @@ class MoodIntakeDialog extends StatefulWidget {
                     Border.all(color: const Color(0xFF7600BF), width: 1.5),
               ),
               clipBehavior: Clip.antiAlias,
-              child: const MoodIntakeDialog(),
+              child: MoodIntakeDialog(feeling: feeling),
             ),
           );
         },
@@ -66,7 +73,10 @@ class MoodIntakeDialog extends StatefulWidget {
 class _MoodIntakeDialogState extends State<MoodIntakeDialog> {
   late final ModeSelectController _modeController =
       Get.find<ModeSelectController>();
+  late final ChatFlowController _chatController =
+      Get.find<ChatFlowController>();
   int _step = 0;
+  bool _isSubmitting = false;
 
   // Step state
   int _intensity = 6;
@@ -156,19 +166,11 @@ class _MoodIntakeDialogState extends State<MoodIntakeDialog> {
     _modeController.ensureModesLoaded();
   }
 
-  void _goNext() {
+  Future<void> _goNext() async {
     if (_step < _totalSteps - 1) {
       setState(() => _step += 1);
     } else {
-      Get.back<MoodIntakeResult>(
-        result: MoodIntakeResult(
-          intensity: _intensity,
-          triggers: _triggers,
-          otherTrigger: _otherTrigger,
-          duration: _duration,
-          support: _support,
-        ),
-      );
+      await _submit();
     }
   }
 
@@ -208,7 +210,7 @@ class _MoodIntakeDialogState extends State<MoodIntakeDialog> {
 
   Widget _buildHeader() {
     final canBack = _step > 0;
-    final canForward = _step < _totalSteps - 1;
+    final canForward = _step < _totalSteps - 1 && _canContinueCurrentStep;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -236,10 +238,54 @@ class _MoodIntakeDialogState extends State<MoodIntakeDialog> {
         _arrowButton(
           icon: Icons.chevron_right,
           enabled: canForward,
-          onTap: _goNext,
+          onTap: () {
+            _goNext();
+          },
         ),
       ],
     );
+  }
+
+  bool get _canContinueCurrentStep {
+    switch (_step) {
+      case 0:
+        return !_isSubmitting;
+      case 1:
+        return _triggers.isNotEmpty && !_isSubmitting;
+      case 2:
+        return _duration != null && !_isSubmitting;
+      case 3:
+      default:
+        return _support != null && !_isSubmitting;
+    }
+  }
+
+  Future<void> _submit() async {
+    if (_isSubmitting) return;
+
+    final result = MoodIntakeResult(
+      intensity: _intensity,
+      triggers: _triggers,
+      otherTrigger: _otherTrigger,
+      duration: _duration,
+      support: _support,
+    );
+
+    setState(() => _isSubmitting = true);
+    final success = await _chatController.submitMoodCheckIn(
+      feeling: widget.feeling,
+      intensity: result.intensity,
+      triggers: result.triggers.toList(growable: false),
+      triggerOther: result.otherTrigger ?? '',
+      duration: result.duration ?? '',
+      supportType: result.support ?? '',
+    );
+    if (!mounted) return;
+    setState(() => _isSubmitting = false);
+
+    if (success) {
+      Get.back<MoodIntakeResult>(result: result);
+    }
   }
 
   Widget _arrowButton({
@@ -408,15 +454,31 @@ class _MoodIntakeDialogState extends State<MoodIntakeDialog> {
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(14),
-            onTap: _goNext,
-            child: Center(
-              child: Text(
-                isLast ? 'Continue to Chat' : 'Continue',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                ),
+            onTap: _canContinueCurrentStep
+                ? () {
+                    _goNext();
+                  }
+                : null,
+            child: Opacity(
+              opacity: _canContinueCurrentStep ? 1 : 0.5,
+              child: Center(
+                child: _isSubmitting
+                    ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.4,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        isLast ? 'Continue to Chat' : 'Continue',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
               ),
             ),
           ),

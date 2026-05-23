@@ -255,7 +255,7 @@ class _MoodSelectionDialogState extends State<MoodSelectionDialog> {
                     widget.onContinue?.call(mood);
                     await Future<void>.delayed(Duration.zero);
                     if (Get.isDialogOpen != true) {
-                      await MoodIntakeDialog.show();
+                      await MoodIntakeDialog.show(feeling: mood);
                     }
                   }
                 : null,

@@ -37,12 +37,9 @@ base class ApiEndpoints {
   //----------------------chat----------------
 
   /// ### get
+  /// 
+  static const String createMessage = _Chat.createMessage;
   static const String getChatRooms = _Chat.getChatRooms;
-  static const String sendChatMessage = _Chat.sendChatMessage;
-  static const String sendChatMessageStream = _Chat.sendChatMessageStream;
-  static const String getAllHistory = _Chat.getAllHistory;
-  static String deleteConversation(String id) => _Chat.deleteConversation(id);
-  static String getConversationbyID(String id) => _Chat.getConversationbyID(id);
 
   // ---------------------- USER -----------------------------
   /// ### get
@@ -81,10 +78,8 @@ base class ApiEndpoints {
   //------------------------- Review --------------------------
   static const String addReview = _Review.addReview;
 
-  //------------------------- WishList --------------------------
-  static const String addWishList = _WishList.addWishList;
-  static String removeWishList(String id) => _WishList.removeWishList(id);
-  static const String getWishList = _WishList.getWishList;
+  //------------------------- SelectMode --------------------------
+  static const String selectMood = _SelectMode.selectMood;
 
   //-------------------------Messaging --------------------------
   static const String createChat = _Messaging.createChat;
@@ -193,6 +188,7 @@ class _User {
 //-----------------------chat----------------
 class _Chat {
   static const String _chatRoute = '${ApiEndpoints.baseUrl}/chat';
+  static const String createMessage = '$_chatRoute/messages';
   static const String getChatRooms = '$_chatRoute/conversations';
   static const String sendChatMessage = '$_chatRoute/messages';
   static const String sendChatMessageStream = '$_chatRoute/messages/stream';
@@ -255,6 +251,12 @@ class _Order {
 class _Review {
   static const String _reviewRoute = '${ApiEndpoints.baseUrl}/reviews';
   static const String addReview = '$_reviewRoute/';
+}
+
+//---------------------- SelectMode -----------------------------
+class _SelectMode {
+  static const String _selectMoodRoute = '${ApiEndpoints.baseUrl}/mood';
+  static const String selectMood = '$_selectMoodRoute/check-in';
 }
 
 //---------------------- WishList -----------------------------
