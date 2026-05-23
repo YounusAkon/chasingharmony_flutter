@@ -85,7 +85,7 @@ class MoodCheckIn {
       triggerOther: json['triggerOther'] ?? '',
       duration: json['duration'] ?? '',
       supportType: json['supportType'] ?? '',
-      id: json['_id'] ?? '',
+      id: json['_id'] ?? json['id'] ?? '',
       createdAt: _parseDateTime(json['createdAt']),
       updatedAt: _parseDateTime(json['updatedAt']),
       v: json['__v'] ?? 0,

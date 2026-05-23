@@ -10,7 +10,9 @@ class SendChatMessageRequestModel {
   Map<String, dynamic> toJson() {
     return {
       'chatSessionId': chatSessionId,
+      'sessionId': chatSessionId,
       'content': content,
     };
   }
 }
+

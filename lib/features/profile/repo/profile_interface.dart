@@ -13,5 +13,5 @@ abstract base class ProfilInterface extends BaseRepository {
   FutureRequest<Success<ProfileModel>> updateProfile(EditProfileModel param);
   FutureRequest<Success<Avatar>> uploadAvatar(File imageFile);
   FutureRequest<Success> changePassword(ChangePasswordModel param);
-  FutureRequest<Success<void>> addReview(ReviewModel review);
+  // FutureRequest<Success<void>> addReview(ReviewModel review);
 }

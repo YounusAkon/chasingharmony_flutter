@@ -245,22 +245,4 @@ final class ProfileInterfaceImpl extends ProfilInterface {
     );
   }
 
-  @override
-  FutureRequest<Success<void>> addReview(ReviewModel review) async {
-    return await asyncTryCatch(
-      tryFunc: () async {
-        final response = await appPigeon.post(
-          ApiEndpoints.addReview,
-          data: review.toJson(),
-          options: appLanguageOptions(),
-        );
-
-        final body = _asMapBody(response.data);
-        final message =
-            body["message"]?.toString() ?? "Review added successfully";
-
-        return Success(data: null, message: message);
-      },
-    );
-  }
 }

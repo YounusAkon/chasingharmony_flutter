@@ -16,9 +16,6 @@ base class ApiEndpoints {
   static const String createNewPassword = _Auth.resetPassword;
   static const String refreshToken = _Auth.refreshToken;
   static const String changePassword = _Auth.changePassword;
-  static const String helpSupport = _HelpSupport.helpSupport;
-  static const String getInterests = _Interest.getallInterests;
-  static const String verification = _Verification.verification;
 
   //---------------report----------------
 
@@ -39,7 +36,7 @@ base class ApiEndpoints {
   /// ### get
   /// 
   static const String createMessage = _Chat.createMessage;
-  static const String getChatRooms = _Chat.getChatRooms;
+  static const String sendMessage = _Chat.sendMessage;
 
   // ---------------------- USER -----------------------------
   /// ### get
@@ -48,56 +45,10 @@ base class ApiEndpoints {
   static String uploadAvatar = _User.uploadAvatar;
   static String userPreferences = _User.preferences;
 
-  // ---------------------- Products -----------------------------
-  static const String getAllProducts = _Product.getAllProducts;
-
-  static const String getSearchbytext = _Search.getSearchbytext;
-  static const String getSearchbyimage = _Search.getSearchbyimage;
-  static const String getSearchbyvoice = _Search.getSearchbyvoice;
-
-  //-------------------------Filter --------------------------
-  static const String getProductsByFilter = _Filter.getProductsByFilter;
-
-  //-------------------------Category --------------------------
-  static const String getAllCategories = _Category.getAllCategories;
-  static const String getManagedCategories = _Category.getManagedCategories;
-
-  //-------------------------cart --------------------------
-  static const String addToCart = _Cart.addToCart;
-  static const String getAllCartItems = _Cart.getAllCartItems;
-  static const String clearCart = _Cart.clearCart;
-  static const String updateCart = _Cart.updateCart;
-
-  //-------------------------Shop --------------------------
-  static String getShop(String id) => _Shop.getShop(id);
-
-  //------------------------- Order --------------------------
-  static const String getMyOrders = _Order.getMyOrders;
-  static const String createOrder = _Order.createOrder;
-
-  //------------------------- Review --------------------------
-  static const String addReview = _Review.addReview;
-
   //------------------------- SelectMode --------------------------
   static const String selectMood = _SelectMode.selectMood;
 
-  //-------------------------Messaging --------------------------
-  static const String createChat = _Messaging.createChat;
-  static const String sendNewMessage = _Messaging.sendNewMessage;
-  static const String sendNewMessageStream = _Messaging.sendNewMessageStream;
-  static const String message = _Messaging.message;
-  static const String getAllChats = _Messaging.getAllChats;
-  static String getChat(String id) => _Messaging.getChat(id);
-  static String markChatAsRead(String id) => _Messaging.markChatAsRead(id);
 
-  static const String getAllSuppliers = _Supplier.getAllSuppliers;
-  static String getSupplierbyId(String id) => _Supplier.getSupplierbyId(id);
-
-  static const String getAllServices = _Service.getAllServices;
-  static String getServicebyid(String id) => _Service.getServicebyid(id);
-
-  //--------------------------banners--------------------------
-  static const String getAllBanners = _Banner.getAllBanners;
 }
 
 //arrow360degree@gmail.com
@@ -127,24 +78,6 @@ class _Auth {
   static const String changePassword = '$_authRoute/change-password';
 }
 
-//------------------------------ Help&Support -----------------------------
-class _HelpSupport {
-  static const String _helpSupportRoute = '${ApiEndpoints.baseUrl}/support';
-  static const String helpSupport = '$_helpSupportRoute/';
-}
-
-//------------------------------ Interest -----------------------------
-class _Interest {
-  static const String _interestRoute = '${ApiEndpoints.baseUrl}/interest';
-  static const String getallInterests = '$_interestRoute/';
-}
-
-// ---------------------- Verification -----------------------------
-class _Verification {
-  static const String _verificationRoute =
-      '${ApiEndpoints.baseUrl}/verification';
-  static const String verification = '$_verificationRoute/create';
-}
 
 // ---------------------- Report -----------------------------
 class _Report {
@@ -169,13 +102,6 @@ class _Mode {
   static const String getAllMode = '$_modeRoute/options';
 }
 
-//---------------------- Safety Tips -----------------------------
-class _SafetyTips {
-  static const String _safetyTipsRoute = '${ApiEndpoints.baseUrl}/safety-tips';
-  static const String getAllSafetyTips = _safetyTipsRoute;
-  static String getSafetyTipById(String id) => '$_safetyTipsRoute/$id';
-}
-
 // ---------------------- USER -----------------------------
 class _User {
   static const String _userRoute = '${ApiEndpoints.baseUrl}/users';
@@ -189,69 +115,9 @@ class _User {
 class _Chat {
   static const String _chatRoute = '${ApiEndpoints.baseUrl}/chat';
   static const String createMessage = '$_chatRoute/messages';
-  static const String getChatRooms = '$_chatRoute/conversations';
-  static const String sendChatMessage = '$_chatRoute/messages';
-  static const String sendChatMessageStream = '$_chatRoute/messages/stream';
-  static const String getAllHistory = '$_chatRoute/conversations';
-  static String getConversationbyID(String id) =>
-      '$_chatRoute/conversations/$id';
-  static String deleteConversation(String id) =>
-      '$_chatRoute/conversations/$id';
+  static const String sendMessage = '$_chatRoute/messages';
 }
 
-// ---------------------- Products -----------------------------
-class _Product {
-  static const String _productRoute = '${ApiEndpoints.baseUrl}/product';
-  static const String getAllProducts = _productRoute;
-}
-
-class _Search {
-  static const String _searchRoute = '${ApiEndpoints.baseUrl}/search';
-  static const String getSearchbytext = '$_searchRoute/products';
-  static const String getSearchbyimage = '$_searchRoute/products';
-  static const String getSearchbyvoice = '$_searchRoute/products';
-}
-
-class _Filter {
-  static const String _filterRoute = '${ApiEndpoints.baseUrl}/filter';
-  static const String getProductsByFilter = '$_filterRoute/products';
-}
-
-//---------------------- Category -----------------------------
-class _Category {
-  static const String _categoryRoute = '${ApiEndpoints.baseUrl}/category';
-  static const String _managedCategoryRoute = '${ApiEndpoints.baseUrl}/categories';
-  static const String getAllCategories = '$_categoryRoute/tree/all';
-  static const String getManagedCategories = '$_managedCategoryRoute/';
-}
-
-//---------------------- Cart -----------------------------
-class _Cart {
-  static const String _cartRoute = '${ApiEndpoints.baseUrl}/cart';
-  static const String addToCart = '$_cartRoute/add';
-  static const String getAllCartItems = '$_cartRoute/';
-  static const String clearCart = '$_cartRoute/clear';
-  static const String updateCart = '$_cartRoute/update';
-}
-
-//---------------------- Shop -----------------------------
-class _Shop {
-  static const String _shopRoute = '${ApiEndpoints.baseUrl}/shop';
-  static String getShop(String id) => '$_shopRoute/$id';
-}
-
-//---------------------- Order -----------------------------
-class _Order {
-  static const String _orderRoute = '${ApiEndpoints.baseUrl}/order';
-  static const String getMyOrders = '$_orderRoute/';
-  static const String createOrder = '$_orderRoute/create';
-}
-
-//---------------------- Review -----------------------------
-class _Review {
-  static const String _reviewRoute = '${ApiEndpoints.baseUrl}/reviews';
-  static const String addReview = '$_reviewRoute/';
-}
 
 //---------------------- SelectMode -----------------------------
 class _SelectMode {
@@ -259,39 +125,4 @@ class _SelectMode {
   static const String selectMood = '$_selectMoodRoute/check-in';
 }
 
-//---------------------- WishList -----------------------------
-class _WishList {
-  static const String _wishListRoute = '${ApiEndpoints.baseUrl}/wishlist';
-  static const String addWishList = '$_wishListRoute/toggle';
-  static String removeWishList(String id) => '$_wishListRoute/$id';
-  static const String getWishList = '$_wishListRoute/';
-}
 
-//----------------------Message -----------------------------
-class _Messaging {
-  static const String _messagingRoute = '${ApiEndpoints.baseUrl}/chat';
-  static String getChat(String id) => '$_messagingRoute/$id';
-  static String markChatAsRead(String id) => '$_messagingRoute/$id/read';
-  static const String sendNewMessage = '$_messagingRoute/messages';
-  static const String sendNewMessageStream = '$_messagingRoute/messages/stream';
-  static const String message = '$_messagingRoute/messages';
-  static const String createChat = '$_messagingRoute/';
-  static const String getAllChats = '$_messagingRoute/';
-}
-
-class _Supplier {
-  static const String _supplierRoute = '${ApiEndpoints.baseUrl}/user';
-  static const String getAllSuppliers = '$_supplierRoute/';
-  static String getSupplierbyId(String id) => '$_supplierRoute/$id';
-}
-
-class _Service {
-  static const String _serviceRoute = '${ApiEndpoints.baseUrl}/service';
-  static const String getAllServices = '$_serviceRoute/';
-  static String getServicebyid(String id) => '$_serviceRoute/$id';
-}
-
-class _Banner {
-  static const String _bannerRoute = '${ApiEndpoints.baseUrl}/banner';
-  static const String getAllBanners = '$_bannerRoute/';
-}

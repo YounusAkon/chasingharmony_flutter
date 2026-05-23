@@ -22,7 +22,7 @@ final class MessageInterfaceImpl extends MessageInt {
     return await asyncTryCatch(
       tryFunc: () async {
         final response = await appPigeon.post(
-          ApiEndpoints.createChat,
+          ApiEndpoints.createMessage,
           data: params.toJson(),
         );
         return _parseMessageResponse(
@@ -40,7 +40,7 @@ final class MessageInterfaceImpl extends MessageInt {
     return await asyncTryCatch(
       tryFunc: () async {
         final response = await appPigeon.post(
-          ApiEndpoints.sendNewMessage,
+          ApiEndpoints.sendMessage,
           data: params.toJson(),
         );
         return _parseMessageResponse(

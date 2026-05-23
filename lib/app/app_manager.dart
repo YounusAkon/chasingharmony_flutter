@@ -6,6 +6,9 @@ import 'package:chasingharmony_fluttere/features/app_ground.dart';
 import 'package:chasingharmony_fluttere/features/auth/controller/login_controller.dart';
 import 'package:chasingharmony_fluttere/features/onbording/onboarding1.dart';
 import 'package:chasingharmony_fluttere/features/profile/controller/get_profile_controller.dart';
+import 'package:chasingharmony_fluttere/features/messages/controller/chat_flow_controller.dart';
+import 'package:chasingharmony_fluttere/features/messages/controller/mode_select_controller.dart';
+import 'package:chasingharmony_fluttere/features/profile/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
@@ -58,6 +61,18 @@ class AppManager extends GetxController {
       _initializingUserId = null;
       if (Get.isRegistered<LoginController>()) {
         Get.delete<LoginController>(force: true);
+      }
+      if (Get.isRegistered<ChatFlowController>()) {
+        Get.delete<ChatFlowController>(force: true);
+      }
+      if (Get.isRegistered<ProfileController>()) {
+        Get.delete<ProfileController>(force: true);
+      }
+      if (Get.isRegistered<ProfileEditController>()) {
+        Get.delete<ProfileEditController>(force: true);
+      }
+      if (Get.isRegistered<ModeSelectController>()) {
+        Get.delete<ModeSelectController>(force: true);
       }
 
       final currentRoute = Get.currentRoute;
