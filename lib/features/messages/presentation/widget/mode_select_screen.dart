@@ -1,3 +1,4 @@
+import 'package:chasingharmony_fluttere/app/controller/app_ground_controller.dart';
 import 'package:chasingharmony_fluttere/features/messages/controller/mode_select_controller.dart';
 import 'package:chasingharmony_fluttere/features/messages/presentation/widget/mood_intake_dialog.dart';
 import 'package:flutter/material.dart';
@@ -115,7 +116,12 @@ class _MoodSelectionDialogState extends State<MoodSelectionDialog> {
               child: IconButton(
                 padding: EdgeInsets.zero,
                 iconSize: 22,
-                onPressed: () => Get.back<String?>(),
+                onPressed: () {
+                  Get.back<String?>();
+                  if (Get.isRegistered<AppGroundController>()) {
+                    Get.find<AppGroundController>().changeTab(0);
+                  }
+                },
                 icon: const Icon(Icons.close, color: Colors.white),
               ),
             ),

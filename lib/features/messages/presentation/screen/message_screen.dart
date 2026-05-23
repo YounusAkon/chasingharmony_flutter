@@ -3,8 +3,26 @@ import 'package:chasingharmony_fluttere/features/messages/presentation/widget/mo
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CelysChatScreen extends StatelessWidget {
+class CelysChatScreen extends StatefulWidget {
   const CelysChatScreen({super.key});
+
+  @override
+  State<CelysChatScreen> createState() => _CelysChatScreenState();
+}
+
+class _CelysChatScreenState extends State<CelysChatScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final controller = Get.find<ChatFlowController>();
+      if (controller.hasActiveConversation) return;
+      if (controller.messages.isNotEmpty) return;
+      if (Get.isDialogOpen == true) return;
+      MoodSelectionDialog.show();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
