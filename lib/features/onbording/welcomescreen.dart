@@ -111,7 +111,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         const SizedBox(height: 14),
                         const SizedBox(
-                          width: 310,
                           child: Text(
                             'Meet CELY, your AI companion designed to support you through stress, overwhelm, and emotional challenges with calm, accessible guidance.',
                             textAlign: TextAlign.center,
@@ -131,8 +130,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           loadingText: 'Login',
                           errorText: 'Login',
                           doneText: 'Login',
-                          height: 68,
-                          borderRadius: BorderRadius.circular(26),
+                          height: 52,
+                          borderRadius: BorderRadius.circular(16),
                           backgroundGradient: _loginGradient,
                           style: const TextStyle(
                             color: Colors.white,
@@ -146,6 +145,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           },
                           onDone: () {},
                         ),
+                        SizedBox(height: 10),
                         TextButton(
                           onPressed: () => Get.offAll(() => AppGround()),
                           style: TextButton.styleFrom(

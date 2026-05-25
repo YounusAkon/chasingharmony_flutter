@@ -3,8 +3,10 @@ import 'package:chasingharmony_fluttere/core/api_handler/success.dart';
 import 'package:chasingharmony_fluttere/core/constants/api_endpoints.dart';
 import 'package:chasingharmony_fluttere/core/helpers/typedefs.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/create_chat_request_model.dart';
+import 'package:chasingharmony_fluttere/features/messages/model/exesting_chat.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/message_responces_model.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/mode_model.dart';
+import 'package:chasingharmony_fluttere/features/messages/model/recent_chat-model.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/send_chat_message_request_model.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/select_mood_request_model.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/select_mood_responces_model.dart';
@@ -142,5 +144,107 @@ final class MessageInterfaceImpl extends MessageInt {
       data: parsedResponse,
       message: parsedResponse.message,
     );
+  }
+
+  @override
+  FutureRequest<Success<List<RecentChatModel>>> getRecentMessages() async {
+    return await asyncTryCatch(
+      tryFunc: () async {
+        final response = await appPigeon.get(ApiEndpoints.getRecentMessages);
+        final body = response.data;
+        if (body is! Map) {
+          throw Exception('Invalid response format');
+        }
+
+        final root = Map<String, dynamic>.from(body);
+        final message = root['message']?.toString() ?? 'Success';
+        if (root['success'] == false) {
+          throw Exception(
+            message.isEmpty ? 'Failed to load recent messages' : message,
+          );
+        }
+
+        final data = root['data'];
+        List<dynamic> itemsList = [];
+        if (data is List) {
+          itemsList = data;
+        } else if (data is Map && data['items'] is List) {
+          itemsList = data['items'];
+        } else {
+          throw Exception('Invalid recent messages data format');
+        }
+
+        final recentChats = itemsList
+            .map(
+              (item) =>
+                  RecentChatModel.fromJson(Map<String, dynamic>.from(item)),
+            )
+            .toList();
+
+        return Success<List<RecentChatModel>>(
+          data: recentChats,
+          message: message,
+        );
+      },
+    );
+  }
+
+  @override
+  FutureRequest<Success<MessageResponseModel>> getSession(
+    String sessionId,
+  ) async {
+    return await asyncTryCatch(
+      tryFunc: () async {
+        final response = await appPigeon.get(
+          '${ApiEndpoints.baseUrl}/chat/sessions/$sessionId',
+        );
+        return _parseMessageResponse(
+          response.data,
+          fallbackMessage: 'Failed to fetch session details',
+        );
+      },
+    );
+  }
+
+  @override
+  FutureRequest<Success<ExestingChat>> getExistingChat(String sessionId) async {
+    return await asyncTryCatch(tryFunc: () async {
+      final response = await appPigeon.get('${ApiEndpoints.getExistingChat}/$sessionId');
+      final body = response.data;
+      if (body is! Map) {
+        throw Exception('Invalid response format');
+      }
+
+      final root = Map<String, dynamic>.from(body);
+      final message = root['message']?.toString() ?? 'Success';
+      if (root['success'] == false) {
+        throw Exception(
+          message.isEmpty ? 'Failed to load existing chat' : message,
+        );
+      }
+
+      final data = root['data'];
+      if (data is! Map) {
+        throw Exception('Invalid existing chat data format');
+      }
+
+      final sessionMap = data['session'] is Map ? Map<String, dynamic>.from(data['session']) : <String, dynamic>{};
+      final returnedSessionId = sessionMap['_id']?.toString() ?? sessionMap['id']?.toString() ?? sessionId;
+
+      final messagesList = data['messages'] is List ? data['messages'] as List : [];
+      final parsedMessages = messagesList
+          .whereType<Map>()
+          .map((item) => ChatMessage.fromJson(Map<String, dynamic>.from(item)))
+          .toList();
+
+      return Success<ExestingChat>(
+        data: ExestingChat(
+          sessionId: returnedSessionId,
+          content: sessionMap['title']?.toString() ?? '',
+          messages: parsedMessages,
+        ),
+        message: message,
+      );
+    });
   }
 }

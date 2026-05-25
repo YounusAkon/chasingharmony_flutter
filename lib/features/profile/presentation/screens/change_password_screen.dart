@@ -157,11 +157,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             color: Colors.white.withValues(alpha: 0.08),
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(),
             const SizedBox(height: 18),
             _PasswordField(
               label: 'Current Password',
@@ -300,7 +301,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
               ],
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -34,10 +34,11 @@ base class ApiEndpoints {
   //----------------------chat----------------
 
   /// ### get
-  /// 
+  ///
   static const String createMessage = _Chat.createMessage;
   static const String sendMessage = _Chat.sendMessage;
-
+  static const String getRecentMessages = _Chat.getRecentMessages;
+  static const String getExistingChat = _Chat.getExistingChat;
   // ---------------------- USER -----------------------------
   /// ### get
   static String getuserbyId = _User.getuserbyId;
@@ -47,21 +48,20 @@ base class ApiEndpoints {
 
   //------------------------- SelectMode --------------------------
   static const String selectMood = _SelectMode.selectMood;
-
-
 }
 
 //arrow360degree@gmail.com
 
-class _RemoteServer {
+class _LocalHostWifi {
   static const String socketUrl = 'https://fnfd0757-5009.inc1.devtunnels.ms/';
 
-  static const String baseUrl = 'https://fnfd0757-5009.inc1.devtunnels.ms/api/v1';
+  static const String baseUrl =
+      'https://fnfd0757-5009.inc1.devtunnels.ms/api/v1';
 }
 
-class _LocalHostWifi {
-  static const String socketUrl = 'http://localhost:5009';
-  static const String baseUrl = 'http://localhost:5009/api/v1';
+class _RemoteServer {
+  static const String socketUrl = 'http://187.77.187.56:5012';
+  static const String baseUrl = 'http://187.77.187.56:5012/api/v1';
 }
 
 class _Auth {
@@ -77,7 +77,6 @@ class _Auth {
   static const String resetPassword = '$_authRoute/reset-password';
   static const String changePassword = '$_authRoute/change-password';
 }
-
 
 // ---------------------- Report -----------------------------
 class _Report {
@@ -116,13 +115,12 @@ class _Chat {
   static const String _chatRoute = '${ApiEndpoints.baseUrl}/chat';
   static const String createMessage = '$_chatRoute/messages';
   static const String sendMessage = '$_chatRoute/messages';
+  static const String getRecentMessages = '$_chatRoute/sessions';
+  static const String getExistingChat = '$_chatRoute/sessions';
 }
-
 
 //---------------------- SelectMode -----------------------------
 class _SelectMode {
   static const String _selectMoodRoute = '${ApiEndpoints.baseUrl}/mood';
   static const String selectMood = '$_selectMoodRoute/check-in';
 }
-
-

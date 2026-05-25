@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:chasingharmony_fluttere/features/messages/model/create_chat_request_model.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/message_responces_model.dart';
+import 'package:chasingharmony_fluttere/features/messages/model/recent_chat-model.dart';
+import 'package:chasingharmony_fluttere/features/messages/model/exesting_chat.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/send_chat_message_request_model.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/select_mood_request_model.dart';
 import 'package:chasingharmony_fluttere/features/messages/model/select_mood_responces_model.dart';
@@ -15,6 +17,9 @@ class ChatFlowController extends GetxController {
   final MessageInt messageInt;
 
   final RxList<ChatUiMessage> messages = <ChatUiMessage>[].obs;
+  final RxList<RecentChatModel> recentChats = <RecentChatModel>[].obs;
+  final RxBool isLoadingRecentChats = false.obs;
+  final RxBool isLoadingSession = false.obs;
   final RxBool isSubmittingMoodCheckIn = false.obs;
   final RxBool isSendingMessage = false.obs;
   final RxBool isAiTyping = false.obs;
@@ -31,6 +36,89 @@ class ChatFlowController extends GetxController {
   String? _chatSessionId;
 
   bool get hasActiveConversation => (_chatSessionId ?? '').trim().isNotEmpty;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchRecentChats();
+  }
+
+  Future<void> fetchRecentChats() async {
+    isLoadingRecentChats.value = true;
+    error.value = '';
+    final response = await messageInt.getRecentMessages();
+    response.fold(
+      (failure) {
+        debugPrint('[fetchRecentChats] failed: ${failure.fullError}');
+        error.value = failure.uiMessage;
+        isLoadingRecentChats.value = false;
+      },
+      (success) {
+        recentChats.assignAll(success.data ?? []);
+        isLoadingRecentChats.value = false;
+      },
+    );
+  }
+
+  Future<bool> loadSession(String sessionId) async {
+    if (isLoadingSession.value) return false;
+    isLoadingSession.value = true;
+    error.value = '';
+
+    final response = await messageInt.getSession(sessionId);
+    var isSuccess = false;
+    response.fold(
+      (failure) {
+        debugPrint('[loadSession] failed: ${failure.fullError}');
+        error.value = failure.uiMessage;
+        _showError(failure.uiMessage);
+      },
+      (success) {
+        final messageData = success.data;
+        if (messageData != null) {
+          _chatSessionId = sessionId;
+          messages.assignAll(_mapResponseMessages(messageData));
+          _scrollToBottom();
+          isSuccess = true;
+        }
+      },
+    );
+    isLoadingSession.value = false;
+    return isSuccess;
+  }
+
+  Future<bool> loadExistingChat(String sessionId) async {
+    if (isLoadingSession.value) return false;
+    isLoadingSession.value = true;
+    error.value = '';
+
+    final response = await messageInt.getExistingChat(sessionId);
+    var isSuccess = false;
+    response.fold(
+      (failure) {
+        debugPrint('[loadExistingChat] failed: ${failure.fullError}');
+        error.value = failure.uiMessage;
+        _showError(failure.uiMessage);
+      },
+      (success) {
+        final existingChat = success.data;
+        if (existingChat != null) {
+          _chatSessionId = existingChat.sessionId;
+          
+          final mapped = existingChat.messages
+              .map(ChatUiMessage.fromApi)
+              .where((message) => message.content.trim().isNotEmpty)
+              .toList();
+
+          messages.assignAll(mapped);
+          _scrollToBottom();
+          isSuccess = true;
+        }
+      },
+    );
+    isLoadingSession.value = false;
+    return isSuccess;
+  }
 
   // @override
   // void onClose() {
@@ -151,6 +239,7 @@ class ChatFlowController extends GetxController {
         debugPrint('[submitMoodCheckIn] Successfully loaded ${messages.length} messages into state (Session ID: $_chatSessionId)');
         isSuccess = true;
         _scrollToBottom();
+        fetchRecentChats();
       },
     );
 
@@ -237,6 +326,7 @@ class ChatFlowController extends GetxController {
         streamingAiText.value = '';
         isSuccess = true;
         _scrollToBottom();
+        fetchRecentChats();
       },
     );
 
