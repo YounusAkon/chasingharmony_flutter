@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CrisisSupportScreen extends StatelessWidget {
   const CrisisSupportScreen({super.key});
@@ -6,6 +7,28 @@ class CrisisSupportScreen extends StatelessWidget {
   static const Color _accentRed = Color(0xFFEF4444);
   static const Color _disclaimerPurple = Color(0xFF8B5CF6);
   static const Color _cardBorder = Color(0xFF3A2150);
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri uri = Uri.parse('tel:$phoneNumber');
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+    }
+  }
+
+  Future<void> _openWebsite(String url) async {
+    final Uri uri = Uri.parse('https://$url');
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +39,12 @@ class CrisisSupportScreen extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset('assets/image/Profile.png', fit: BoxFit.cover),
+            child: Image.asset(
+              'assets/image/Profile.png',
+              fit: BoxFit.cover,
+            ),
           ),
+
           SingleChildScrollView(
             padding: EdgeInsets.fromLTRB(20, topPadding, 20, 20),
             child: Column(
@@ -34,16 +61,22 @@ class CrisisSupportScreen extends StatelessWidget {
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
+
                     const SizedBox(width: 12),
+
                     const Text(
                       "Back to Profile",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 24),
 
-                // Important Notice (dashed border)
+                /// Important Notice
                 _DashedBorderBox(
                   color: _accentRed,
                   radius: 16,
@@ -73,7 +106,9 @@ class CrisisSupportScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+
                         const SizedBox(height: 6),
+
                         RichText(
                           textAlign: TextAlign.center,
                           text: const TextSpan(
@@ -113,14 +148,18 @@ class CrisisSupportScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 16),
 
-                // Disclaimer (solid border container)
+                /// Disclaimer
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: _cardBorder, width: 1),
+                    border: Border.all(
+                      color: _cardBorder,
+                      width: 1,
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,7 +182,9 @@ class CrisisSupportScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+
                       const SizedBox(height: 8),
+
                       RichText(
                         textAlign: TextAlign.center,
                         text: const TextSpan(
@@ -171,98 +212,81 @@ class CrisisSupportScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 32),
 
-                // Crisis Message
+                const SizedBox(height: 12),
+
+                /// Crisis Message
                 Center(
                   child: Column(
                     children: [
-                      Container(
+                      const SizedBox(
                         width: 90,
                         height: 90,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: _accentRed.withValues(alpha: 0.4),
-                            width: 2,
-                          ),
-                        ),
-                        child: Center(
-                          child: Container(
-                            width: 64,
-                            height: 64,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _accentRed,
-                            ),
-                            child: const Icon(
-                              Icons.priority_high_rounded,
-                              color: Colors.white,
-                              size: 36,
-                            ),
-                          ),
+                        child: Image(
+                          image: AssetImage('assets/icon/c.png'),
                         ),
                       ),
-                      const SizedBox(height: 20),
+
                       const Text(
-                        "This is a Crisis",
+                        "This is a Crisis\nYou're Not Alone",
                         style: TextStyle(
-                          fontSize: 26,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const Text(
-                        "You're Not Alone",
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+
                       const SizedBox(height: 12),
+
                       const Text(
                         "If you're in crisis or thinking about harming yourself, help is here , and you matter. You're not alone 24/7, and we will help",
                         style: TextStyle(
                           color: Color(0xFFBFB7C9),
-                          height: 1.4,
-                          fontSize: 13,
+                          fontSize: 11,
                         ),
                         textAlign: TextAlign.center,
                       ),
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 24),
 
-                // Support Options
+                /// Support Options
                 _buildSupportTile(
                   icon: Icons.phone,
                   title: "National Suicide Prevention Lifeline",
                   value: "988",
+                  onTap: () => _makePhoneCall('988'),
                 ),
+
                 const SizedBox(height: 12),
+
                 _buildSupportTile(
                   icon: Icons.headset_mic_outlined,
                   title: "Crisis Text Line",
                   value: "741741",
+                  onTap: () => _makePhoneCall('741741'),
                 ),
+
                 const SizedBox(height: 12),
+
                 _buildSupportTile(
                   icon: Icons.public,
                   title: "International Support",
                   value: "findahelpline.com",
+                  onTap: () => _openWebsite('findahelpline.com'),
                 ),
+
                 const SizedBox(height: 24),
 
-                // Call 911 Button
+                /// Call 911 Button
                 SizedBox(
                   width: double.infinity,
                   height: 58,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => _makePhoneCall('911'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _accentRed,
                       shape: RoundedRectangleBorder(
@@ -272,8 +296,13 @@ class CrisisSupportScreen extends StatelessWidget {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.phone, color: Colors.white),
+                        Icon(
+                          Icons.phone,
+                          color: Colors.white,
+                        ),
+
                         SizedBox(width: 12),
+
                         Text(
                           "Call 911",
                           style: TextStyle(
@@ -286,9 +315,10 @@ class CrisisSupportScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 12),
 
-                // Footer Note
+                /// Footer Note
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
@@ -297,10 +327,15 @@ class CrisisSupportScreen extends StatelessWidget {
                       color: _accentRed,
                       size: 16,
                     ),
+
                     SizedBox(width: 8),
+
                     Text(
                       "Call 911 if you are in immediate danger",
-                      style: TextStyle(color: _accentRed, fontSize: 13),
+                      style: TextStyle(
+                        color: _accentRed,
+                        fontSize: 13,
+                      ),
                     ),
                   ],
                 ),
@@ -316,54 +351,82 @@ class CrisisSupportScreen extends StatelessWidget {
     required IconData icon,
     required String title,
     required String value,
+    required VoidCallback onTap,
   }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.25),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _cardBorder, width: 1),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: _accentRed, width: 1.5),
-            ),
-            child: Icon(icon, color: _accentRed, size: 20),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.black.withValues(alpha: 0.25),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: _cardBorder,
+            width: 1,
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: _accentRed,
+                  width: 1.5,
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  value,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: _accentRed,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+              ),
+              child: Icon(
+                icon,
+                color: _accentRed,
+                size: 20,
+              ),
             ),
-          ),
-          const SizedBox(width: 44),
-        ],
+
+            const SizedBox(width: 16),
+
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+
+                  const SizedBox(height: 2),
+
+                  Text(
+                    value,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: _accentRed,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            IconButton(
+              onPressed: onTap,
+              icon: const Icon(
+                Icons.call,
+                color: _accentRed,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -427,16 +490,23 @@ class _DashedBorderPainter extends CustomPainter {
       Rect.fromLTWH(0, 0, size.width, size.height),
       Radius.circular(radius),
     );
+
     final path = Path()..addRRect(rrect);
 
     for (final metric in path.computeMetrics()) {
       double distance = 0;
+
       while (distance < metric.length) {
         final next = distance + dashLength;
+
         canvas.drawPath(
-          metric.extractPath(distance, next.clamp(0, metric.length)),
+          metric.extractPath(
+            distance,
+            next.clamp(0, metric.length),
+          ),
           paint,
         );
+
         distance = next + gapLength;
       }
     }
