@@ -145,22 +145,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           },
                           onDone: () {},
                         ),
-                        SizedBox(height: 10),
-                        TextButton(
-                          onPressed: () => Get.offAll(() => AppGround()),
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                          ),
-                          child: const Text(
-                            'Continue as a Guest',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        SizedBox(height: 40),
+                        // TextButton(
+                        //   onPressed: () => Get.offAll(() => AppGround()),
+                        //   style: TextButton.styleFrom(
+                        //     foregroundColor: Colors.white,
+                        //     padding: const EdgeInsets.symmetric(vertical: 12),
+                        //   ),
+                        //   child: const Text(
+                        //     'Continue as a Guest',
+                        //     style: TextStyle(
+                        //       fontSize: 17,
+                        //       fontWeight: FontWeight.w500,
+                        //       color: Colors.white,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -221,7 +221,7 @@ class _Sparkles extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: const [
-        Icon(Icons.auto_awesome, size: 16, color: Color(0xFFB85AFF)),
+        Icon(Icons.auto_awesome, size: 20, color: Color(0xFFB85AFF)),
         SizedBox(width: 2),
         Icon(Icons.auto_awesome, size: 10, color: Color(0xFFD083FF)),
       ],

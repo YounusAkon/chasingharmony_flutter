@@ -164,15 +164,11 @@ class _TopBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       child: Row(
         children: [
-          ShaderMask(
-            shaderCallback: (b) => const LinearGradient(
-              colors: [Color(0xFF3B82F6), Color(0xFF8B5CF6)],
-            ).createShader(b),
-            child: const Icon(
-              Icons.auto_awesome,
-              color: Colors.white,
-              size: 22,
-            ),
+          
+          Image(
+            image: AssetImage('assets/icon/ai.png'),
+            width: 40,
+            height: 40,
           ),
           const Spacer(),
           GestureDetector(
@@ -338,11 +334,8 @@ class _ImageBubble extends StatelessWidget {
         child: Image.asset(
           imagePath,
           fit: BoxFit.contain,
-          errorBuilder: (_, error, stackTrace) => Icon(
-            Icons.image_outlined,
-            color: Color(0xFF8B5CF6),
-            size: 80,
-          ),
+          errorBuilder: (_, error, stackTrace) =>
+              Icon(Icons.image_outlined, color: Color(0xFF8B5CF6), size: 80),
         ),
       ),
     );
