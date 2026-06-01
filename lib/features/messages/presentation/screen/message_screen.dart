@@ -1,5 +1,6 @@
 import 'package:chasingharmony_fluttere/features/messages/controller/chat_flow_controller.dart';
 import 'package:chasingharmony_fluttere/features/messages/presentation/widget/mode_select_screen.dart';
+import 'package:chasingharmony_fluttere/features/profile/presentation/screens/subscription_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,7 +35,10 @@ class _CelysChatScreenState extends State<CelysChatScreen> {
           body: Stack(
             children: [
               Positioned.fill(
-                child: Image.asset('assets/image/Profile.png', fit: BoxFit.cover),
+                child: Image.asset(
+                  'assets/image/Profile.png',
+                  fit: BoxFit.cover,
+                ),
               ),
               SafeArea(
                 child: Padding(
@@ -63,25 +67,31 @@ class _CelysChatScreenState extends State<CelysChatScreen> {
                               ),
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: const Color(0xFF1B062D),
-                              border: Border.all(
-                                color: const Color(0xFF342240),
-                                width: 1,
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              Get.to(() => const SubscriptionPlansScreen());
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 10,
                               ),
-                            ),
-                            child: const Text(
-                              'Get CELYS +',
-                              style: TextStyle(
-                                color: Color(0xFF9D00FF),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 13,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: const Color(0xFF1B062D),
+                                border: Border.all(
+                                  color: const Color(0xFF342240),
+                                  width: 1,
+                                ),
+                              ),
+                              child: const Text(
+                                'Get CELYS +',
+                                style: TextStyle(
+                                  color: Color(0xFF9D00FF),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13,
+                                ),
                               ),
                             ),
                           ),
@@ -138,12 +148,14 @@ class _CelysChatScreenState extends State<CelysChatScreen> {
                                     ),
                                     style: const TextStyle(color: Colors.black),
                                     textInputAction: TextInputAction.send,
-                                    onSubmitted: (_) => controller.sendTypedMessage(),
+                                    onSubmitted: (_) =>
+                                        controller.sendTypedMessage(),
                                   ),
                                 ),
                               ),
                               GestureDetector(
-                                onTap: (controller.isSendingMessage.value ||
+                                onTap:
+                                    (controller.isSendingMessage.value ||
                                         controller.isAiTyping.value)
                                     ? null
                                     : controller.sendTypedMessage,
@@ -153,7 +165,8 @@ class _CelysChatScreenState extends State<CelysChatScreen> {
                                     color: Color(0xFF6B4EFF),
                                     shape: BoxShape.circle,
                                   ),
-                                  child: (controller.isSendingMessage.value ||
+                                  child:
+                                      (controller.isSendingMessage.value ||
                                           controller.isAiTyping.value)
                                       ? const SizedBox(
                                           width: 20,
@@ -203,11 +216,7 @@ class _EmptyChatState extends StatelessWidget {
         ),
         child: const Text(
           "Hi! I'm CELYS AI. Start a mood check-in or type your situation to begin.",
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 16,
-            height: 1.4,
-          ),
+          style: TextStyle(color: Colors.black87, fontSize: 16, height: 1.4),
         ),
       ),
     );
@@ -328,7 +337,8 @@ class _TypingDotsState extends State<_TypingDots>
           mainAxisSize: MainAxisSize.min,
           children: List.generate(3, (index) {
             final offset = (t + index * 0.15) % 1.0;
-            final scale = 0.6 + 0.4 * (1 - (offset - 0.5).abs() * 2).clamp(0.0, 1.0);
+            final scale =
+                0.6 + 0.4 * (1 - (offset - 0.5).abs() * 2).clamp(0.0, 1.0);
             return Padding(
               padding: EdgeInsets.only(right: index == 2 ? 0 : 6),
               child: Transform.scale(

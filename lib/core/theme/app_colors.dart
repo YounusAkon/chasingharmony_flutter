@@ -4,7 +4,7 @@ class AppColors {
   /// [Primary Background color]
   static const Color background = Color(0xFFFFFFFF);
   static const Color secondarybackground = Color(0xFF3D3E40);
-  static const Color primarybutton = Color(0xFFB3131C);
+  static const Color primarybutton = Color(0xFF9D00FF);
   static const Color imagebackgrount = Color(0xFF1C2A3A);
 
   //gradiant colors

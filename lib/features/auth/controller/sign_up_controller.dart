@@ -54,9 +54,6 @@ class SignUpController extends GetxController {
       either: result,
       errorSnackbarNotifier: snackbarNotifier,
       successSnackbarNotifier: snackbarNotifier,
-      onError: (failure) {
-        buttonNotifier?.setError();
-      },
       processStatusNotifier: buttonNotifier,
     );
   }
