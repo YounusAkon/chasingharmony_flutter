@@ -12,8 +12,6 @@ import '../../../core/network/app_language_options.dart';
 import '../model/chnage_password_model.dart';
 import '../model/edit_profile_model.dart';
 import '../model/profile_model.dart';
-import '../model/review_model.dart';
-
 final class ProfileInterfaceImpl extends ProfilInterface {
   ProfileInterfaceImpl({required this.appPigeon});
   final AppPigeon appPigeon;

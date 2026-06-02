@@ -6,7 +6,6 @@ import '../../../core/helpers/typedefs.dart';
 import '../model/chnage_password_model.dart';
 import '../model/edit_profile_model.dart';
 import '../model/profile_model.dart';
-import '../model/review_model.dart';
 
 abstract base class ProfilInterface extends BaseRepository {
   FutureRequest<Success<ProfileModel>> getProfile(String id);
