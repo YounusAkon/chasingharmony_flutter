@@ -209,27 +209,24 @@ class _MoodSelectionDialogState extends State<MoodSelectionDialog> {
     required List<MoodOption> moods,
     required String? selectedMood,
   }) {
-    return Scrollbar(
-      thumbVisibility: moods.length > 6,
-      child: GridView.builder(
-        physics: const BouncingScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.95,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-        ),
-        itemCount: moods.length,
-        itemBuilder: (context, index) {
-          final mood = moods[index];
-          final isSelected = selectedMood == mood.value;
-          return _MoodCard(
-            mood: mood,
-            isSelected: isSelected,
-            onTap: () => setState(() => _selectedMood = mood.value),
-          );
-        },
+    return GridView.builder(
+      physics: const BouncingScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 0.95,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
       ),
+      itemCount: moods.length,
+      itemBuilder: (context, index) {
+        final mood = moods[index];
+        final isSelected = selectedMood == mood.value;
+        return _MoodCard(
+          mood: mood,
+          isSelected: isSelected,
+          onTap: () => setState(() => _selectedMood = mood.value),
+        );
+      },
     );
   }
 

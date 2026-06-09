@@ -68,7 +68,7 @@ class MyRefreshTokenManager implements RefreshTokenManagerInterface {
     if (err.response?.statusCode != 401) return false;
 
     // Never refresh for refresh endpoint failures themselves.
-    if (err.requestOptions.path.contains('/auth/refresh-token')) {
+    if (err.requestOptions.path.contains('/auth/refresh')) {
       return false;
     }
 

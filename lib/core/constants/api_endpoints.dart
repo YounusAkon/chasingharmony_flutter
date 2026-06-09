@@ -46,6 +46,13 @@ base class ApiEndpoints {
   static String uploadAvatar = _User.uploadAvatar;
   static String userPreferences = _User.preferences;
 
+  //---------------------- subscriptions -----------------------------
+  static const String subscriptionPlans = _Subscription.plans;
+  static const String mySubscription = _Subscription.me;
+  static const String createSubscriptionCheckout = _Subscription.checkout;
+  static const String confirmSubscriptionSuccess = _Subscription.success;
+  static const String cancelSubscription = _Subscription.cancel;
+
   //------------------------- SelectMode --------------------------
   static const String selectMood = _SelectMode.selectMood;
 }
@@ -60,8 +67,14 @@ class _LocalHostWifi {
 }
 
 class _RemoteServer {
-  static const String socketUrl = 'http://187.77.187.56:5012';
-  static const String baseUrl = 'http://187.77.187.56:5012/api/v1';
+  static const String socketUrl = String.fromEnvironment(
+    'SOCKET_URL',
+    defaultValue: 'http://187.77.187.56:5012',
+  );
+  static const String baseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: 'http://187.77.187.56:5012/api/v1',
+  );
 }
 
 class _Auth {
@@ -72,7 +85,7 @@ class _Auth {
   static const String socialLogin = '$_authRoute/social-login';
   static const String signup = '$_authRoute/signup';
   static const String forgetPassword = '$_authRoute/forgot-password';
-  static const String refreshToken = '$_authRoute/refresh-token';
+  static const String refreshToken = '$_authRoute/refresh';
   static const String verifyCode = '$_authRoute/verify-otp';
   static const String resetPassword = '$_authRoute/reset-password';
   static const String changePassword = '$_authRoute/change-password';
@@ -108,6 +121,16 @@ class _User {
   static String updateProfile = '$_userRoute/me';
   static String uploadAvatar = '$_userRoute/me/avatar';
   static String preferences = '$_userRoute/me/preferences';
+}
+
+// ---------------------- SUBSCRIPTIONS -----------------------------
+class _Subscription {
+  static const String _subscriptionRoute = '${ApiEndpoints.baseUrl}/subscriptions';
+  static const String plans = '$_subscriptionRoute/plans';
+  static const String me = '$_subscriptionRoute/me';
+  static const String checkout = '$_subscriptionRoute/checkout';
+  static const String success = '$_subscriptionRoute/success';
+  static const String cancel = '$_subscriptionRoute/cancel';
 }
 
 //-----------------------chat----------------

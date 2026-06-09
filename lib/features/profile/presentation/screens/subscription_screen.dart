@@ -1,4 +1,7 @@
+import 'package:chasingharmony_fluttere/features/subscription/controller/subscription_controller.dart';
+import 'package:chasingharmony_fluttere/features/subscription/model/subscription_models.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SubscriptionPlansScreen extends StatefulWidget {
   const SubscriptionPlansScreen({super.key});
@@ -9,7 +12,16 @@ class SubscriptionPlansScreen extends StatefulWidget {
 }
 
 class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
-  String _selectedPlan = 'CELY Care';
+  late final SubscriptionController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = Get.find<SubscriptionController>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.loadInitial();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +36,7 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          "Back to Profile",
+          'Back to Profile',
           style: TextStyle(color: Colors.white, fontSize: 18),
         ),
       ),
@@ -34,259 +46,221 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
         children: [
           Image.asset('assets/image/Profile.png', fit: BoxFit.cover),
           SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-              child: Column(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "CELY AI Subscription Plans",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+            child: Obx(() {
+              final isLoading =
+                  _controller.isLoadingPlans.value &&
+                  _controller.plans.isEmpty;
+              if (isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(color: Colors.white),
+                );
+              }
+
+              return RefreshIndicator(
+                onRefresh: _controller.loadInitial,
+                color: const Color(0xFF8B5CF6),
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                  children: [
+                    const Text(
+                      'CELY AI Subscription Plans',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Choose Your Peace - support, clarity, and calm whenever you need it.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    if (_controller.plans.isEmpty)
+                      _EmptyPlans(onRetry: _controller.loadInitial)
+                    else
+                      ..._controller.plans.map(
+                        (plan) => Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: _PlanCard(
+                            plan: plan,
+                            isSelected:
+                                _controller.selectedPlanKey.value == plan.key,
+                            isCurrent:
+                                _controller.currentPlanKey == plan.key,
+                            isBusy:
+                                _controller.isCheckingOut.value ||
+                                _controller.isConfirmingCheckout.value,
+                            onSelect: () =>
+                                _controller.selectedPlanKey.value = plan.key,
+                            onSubscribe: () =>
+                                _controller.subscribeToPlan(plan.key),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        "Choose Your Peace — Support, clarity, and calm whenever you need it.",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                          height: 1.4,
-                        ),
-                      ),
+                    if (_canCancelCurrentPlan) ...[
+                      const SizedBox(height: 4),
+                      _CancelSubscriptionButton(controller: _controller),
                     ],
-                  ),
-
-                  const SizedBox(height: 32),
-
-                  // CELY Basic
-                  _buildPlanCard(
-                    planKey: "CELY Basic",
-                    title: "CELY Basic",
-                    price: "\$0",
-                    period: "/month",
-                    features: const [
-                      "Limited chat",
-                      "Mood check-in",
-                      "Anonymous support",
-                    ],
-                    buttonText: "Subscribe",
-                    isPopular: false,
-                    gradientColors: const [
-                      Color(0xFF3B82F6),
-                      Color(0xFF8B5CF6),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // CELY Care - Most Popular
-                  Stack(
-                    children: [
-                      _buildPlanCard(
-                        planKey: "CELY Care",
-                        title: "CELY Care",
-                        price: "\$9.99",
-                        period: "/month",
-                        features: const [
-                          "Unlimited chat",
-                          "Mood tracking",
-                          "Guided exercises",
-                        ],
-                        buttonText: "Subscribe",
-                        isPopular: true,
-                        gradientColors: const [
-                          Color(0xFF3B82F6),
-                          Color(0xFF8B5CF6),
-                        ],
-                      ),
-                      const Positioned(
-                        top: 16,
-                        right: 20,
-                        child: MostPopularBadge(),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // CELY Mind+
-                  _buildPlanCard(
-                    planKey: "CELY Mind+",
-                    title: "CELY Mind+",
-                    price: "\$19.99",
-                    period: "/month",
-                    features: const [
-                      "AI journaling",
-                      "Deep emotional support",
-                      "Personalized AI",
-                    ],
-                    buttonText: "Subscribe",
-                    isPopular: false,
-                    gradientColors: const [
-                      Color(0xFF3B82F6),
-                      Color(0xFF8B5CF6),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-
-                  _buildPlanCard(
-                    planKey: "CELY Mind+",
-                    title: "CELY Mind+",
-                    price: "\$39.99",
-                    period: "/month",
-                    features: const [
-                      "Full access",
-                      "Priority AI",
-                      "Wellness plans",
-                    ],
-                    buttonText: "Subscribe",
-                    isPopular: false,
-                    gradientColors: const [
-                      Color(0xFF3B82F6),
-                      Color(0xFF8B5CF6),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                  ],
+                ),
+              );
+            }),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildPlanCard({
-    required String planKey,
-    required String title,
-    required String price,
-    required String period,
-    required List<String> features,
-    required String buttonText,
-    required bool isPopular,
-    required List<Color> gradientColors,
-  }) {
-    final isSelected = _selectedPlan == planKey;
+  bool get _canCancelCurrentPlan {
+    final currentPlan = _controller.currentPlanKey;
+    final subscription = _controller.status.value?.subscription;
+    return currentPlan != 'basic' && subscription?.isActive == true;
+  }
+}
 
-    return GestureDetector(
-      onTap: () => setState(() => _selectedPlan = planKey),
+class _PlanCard extends StatelessWidget {
+  const _PlanCard({
+    required this.plan,
+    required this.isSelected,
+    required this.isCurrent,
+    required this.isBusy,
+    required this.onSelect,
+    required this.onSubscribe,
+  });
+
+  final SubscriptionPlanModel plan;
+  final bool isSelected;
+  final bool isCurrent;
+  final bool isBusy;
+  final VoidCallback onSelect;
+  final VoidCallback onSubscribe;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onSelect,
+      borderRadius: BorderRadius.circular(8),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        padding: const EdgeInsets.all(20),
+        duration: const Duration(milliseconds: 180),
+        padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: const Color(0xFF1A1A1A).withValues(alpha: 0.92),
-          borderRadius: BorderRadius.circular(20),
-          border: isSelected
-              ? Border.all(color: const Color(0xFF8B5CF6), width: 2)
-              : Border.all(color: Colors.white.withValues(alpha: 0.06)),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: const Color(0xFF8B5CF6).withValues(alpha: 0.22),
-                    blurRadius: 18,
-                    spreadRadius: 1,
-                  ),
-                ]
-              : null,
+          color: const Color(0xFF111111).withValues(alpha: 0.94),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isSelected
+                ? const Color(0xFF8B5CF6)
+                : Colors.white.withValues(alpha: 0.08),
+            width: isSelected ? 2 : 1,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    plan.name,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                if (plan.isPopular) const _MostPopularBadge(),
+                if (isCurrent) const _CurrentBadge(),
+              ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  price,
+                  plan.displayPrice,
                   style: const TextStyle(
-                    fontSize: 36,
+                    fontSize: 34,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
-                Text(
-                  period,
-                  style: const TextStyle(fontSize: 18, color: Colors.grey),
+                const SizedBox(width: 4),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    plan.displayInterval,
+                    style: const TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            const Divider(color: Colors.grey, thickness: 0.5),
-            const SizedBox(height: 16),
-
-            // Features
-            Column(
-              children: features
-                  .map(
-                    (feature) => Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.check_circle,
-                            color: Color(0xFF22C55E),
-                            size: 22,
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            feature,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ],
+            const SizedBox(height: 18),
+            const Divider(color: Color(0xFF3F3F46), thickness: 0.7),
+            const SizedBox(height: 14),
+            ...plan.features.map(
+              (feature) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.check_circle,
+                      color: Color(0xFF22C55E),
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        feature,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.white70,
+                          height: 1.25,
+                        ),
                       ),
                     ),
-                  )
-                  .toList(),
+                  ],
+                ),
+              ),
             ),
-
-            const SizedBox(height: 24),
-
-            // Subscribe Button
+            const SizedBox(height: 14),
             SizedBox(
               width: double.infinity,
-              height: 54,
+              height: 50,
               child: ElevatedButton(
-                onPressed: () => setState(() => _selectedPlan = planKey),
+                onPressed: isBusy || isCurrent ? null : onSubscribe,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  shadowColor: Colors.transparent,
+                  backgroundColor: const Color(0xFF8B5CF6),
+                  disabledBackgroundColor: const Color(0xFF3F3F46),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: gradientColors),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      buttonText,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                child: isBusy && isSelected
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        isCurrent ? 'Current Plan' : 'Subscribe',
+                        style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ),
             ),
           ],
@@ -296,26 +270,109 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
   }
 }
 
-class MostPopularBadge extends StatelessWidget {
-  const MostPopularBadge({super.key});
+class _CancelSubscriptionButton extends StatelessWidget {
+  const _CancelSubscriptionButton({required this.controller});
+
+  final SubscriptionController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => OutlinedButton(
+        onPressed: controller.isCancelling.value
+            ? null
+            : controller.cancelCurrentSubscription,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: Colors.white,
+          side: BorderSide(color: Colors.white.withValues(alpha: 0.25)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          minimumSize: const Size(double.infinity, 48),
+        ),
+        child: controller.isCancelling.value
+            ? const SizedBox(
+                width: 18,
+                height: 18,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
+                ),
+              )
+            : const Text('Cancel Subscription'),
+      ),
+    );
+  }
+}
+
+class _MostPopularBadge extends StatelessWidget {
+  const _MostPopularBadge();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      margin: const EdgeInsets.only(left: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF8B5CF6), Color(0xFFEC4899)],
-        ),
-        borderRadius: BorderRadius.circular(20),
+        color: const Color(0xFFEC4899),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: const Text(
-        "Most Popular",
+        'Popular',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 13,
+          fontSize: 12,
           fontWeight: FontWeight.bold,
         ),
+      ),
+    );
+  }
+}
+
+class _CurrentBadge extends StatelessWidget {
+  const _CurrentBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(left: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: const Color(0xFF166534),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: const Text(
+        'Current',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class _EmptyPlans extends StatelessWidget {
+  const _EmptyPlans({required this.onRetry});
+
+  final Future<void> Function() onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Colors.black.withValues(alpha: 0.78),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          const Text(
+            'Plans are unavailable right now.',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          const SizedBox(height: 12),
+          TextButton(onPressed: onRetry, child: const Text('Retry')),
+        ],
       ),
     );
   }

@@ -24,6 +24,8 @@ base class BaseRepository {
       case 502:
       case 504:
         return 'Server is unreachable right now. Please try again.';
+      case 402:
+        return 'Your current plan has reached its limit. Upgrade to continue.';
       default:
         return 'Some error occured.';
     }

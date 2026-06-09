@@ -18,6 +18,10 @@ import '../../features/profile/controller/edit_profile_controller.dart';
 import '../../features/profile/controller/get_profile_controller.dart';
 import '../../features/profile/repo/profile_interface.dart';
 import '../../features/profile/repo/profile_interface_impl.dart';
+import '../../features/subscription/controller/subscription_controller.dart';
+import '../../features/subscription/repo/subscription_interface.dart';
+import '../../features/subscription/repo/subscription_interface_impl.dart';
+import '../../features/subscription/services/subscription_deep_link_service.dart';
 
 Future<void> initServices() async {
   if (!Get.isRegistered<AppLanguageController>()) {
@@ -76,4 +80,21 @@ Future<void> initServices() async {
     () => SafetyTipsController(safetyInterface: Get.find<SafetyInterface>()),
     fenix: true,
   );
+
+  Get.lazyPut<SubscriptionInterface>(
+    () => SubscriptionInterfaceImpl(appPigeon: Get.find<AppPigeon>()),
+    fenix: true,
+  );
+  if (!Get.isRegistered<SubscriptionController>()) {
+    Get.put<SubscriptionController>(
+      SubscriptionController(repo: Get.find<SubscriptionInterface>()),
+      permanent: true,
+    );
+  }
+  if (!Get.isRegistered<SubscriptionDeepLinkService>()) {
+    await Get.putAsync<SubscriptionDeepLinkService>(
+      () => SubscriptionDeepLinkService().init(),
+      permanent: true,
+    );
+  }
 }
