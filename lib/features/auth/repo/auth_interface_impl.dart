@@ -35,11 +35,11 @@ final class AuthInterfaceImpl extends AuthInterface {
       ? _emptyToNull(googleWebServerClientId)
       : _emptyToNull(googleIosClientId);
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: <String>['openid', 'email', 'profile'],
-    clientId: _googleClientId,
-    serverClientId: _emptyToNull(googleWebServerClientId),
-  );
+  // final GoogleSignIn _googleSignIn = GoogleSignIn(
+  //   scopes: <String>['openid', 'email', 'profile'],
+  //   clientId: _googleClientId,
+  //   serverClientId: _emptyToNull(googleWebServerClientId),
+  // );
 
   AuthInterfaceImpl(this.appPigeon);
 
@@ -229,7 +229,7 @@ final class AuthInterfaceImpl extends AuthInterface {
     try {
       // Reset previous Google session so users can pick a different account.
       await _clearGoogleSessionSilently();
-      googleUser = await _googleSignIn.signIn();
+      // googleUser = await _googleSignIn.signIn();
     } on PlatformException catch (e) {
       return Left(_mapGoogleSignInPlatformException(e));
     } catch (e) {
@@ -286,7 +286,7 @@ final class AuthInterfaceImpl extends AuthInterface {
         email: googleUser.email,
       ),
       idToken: idToken,
-      accessToken: googleAuth.accessToken,
+      // accessToken: googleAuth.accessToken,
       avatarUrl: googleUser.photoUrl,
       preferredLanguage: Get.find<AppLanguageController>().languageCode.value,
     );
@@ -361,7 +361,7 @@ final class AuthInterfaceImpl extends AuthInterface {
 
   Future<void> _clearGoogleSessionSilently() async {
     try {
-      await _googleSignIn.signOut();
+      // await _googleSignIn.signOut();
     } catch (e) {
       debugPrint('Google signOut skipped: $e');
     }
