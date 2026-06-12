@@ -243,4 +243,21 @@ final class ProfileInterfaceImpl extends ProfilInterface {
     );
   }
 
+  @override
+  FutureRequest<Success> deleteAccount() async {
+    return await asyncTryCatch(
+      tryFunc: () async {
+        final response = await appPigeon.delete(
+          ApiEndpoints.deleteAccount,
+          options: appLanguageOptions(),
+        );
+
+        return Success(
+          message:
+              extractSuccessMessage(response) ??
+              "Account deleted successfully",
+        );
+      },
+    );
+  }
 }

@@ -290,6 +290,9 @@ class AppTranslations extends Translations {
     'profile.confirmPassword': 'Please confirm your password',
     'profile.passwordsNotMatch': 'Passwords do not match',
     'profile.logoutConfirm': 'Are you sure to log out?',
+    'profile.deleteAccount': 'Delete Account',
+    'profile.deleteAccountConfirm':
+        'Are you sure you want to delete your account? This action is permanent and cannot be undone.',
   };
 
   static const Map<String, String> _it = {
@@ -585,6 +588,9 @@ class AppTranslations extends Translations {
     'profile.confirmPassword': 'Conferma la tua password',
     'profile.passwordsNotMatch': 'Le password non corrispondono',
     'profile.logoutConfirm': 'Sei sicuro di voler uscire?',
+    'profile.deleteAccount': 'Elimina account',
+    'profile.deleteAccountConfirm':
+        'Sei sicuro di voler eliminare il tuo account? Questa azione è permanente e non può essere annullata.',
   };
 
   @override

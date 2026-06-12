@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:app_pigeon/app_pigeon.dart';
 import 'package:chasingharmony_fluttere/features/auth/presentation/screens/login_screen.dart';
 import 'package:chasingharmony_fluttere/features/auth/repo/auth_interface.dart';
 import 'package:chasingharmony_fluttere/features/profile/controller/edit_profile_controller.dart';
@@ -22,6 +23,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   late final ProfileController _profileController;
 
   bool _isLogoutLoading = false;
+  bool _isDeleteAccountLoading = false;
 
   @override
   void initState() {
@@ -335,6 +337,141 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     );
   }
 
+  void _showDeleteAccountDialog() {
+    Get.dialog(
+      StatefulBuilder(
+        builder: (context, setStateDialog) {
+          return Dialog(
+            backgroundColor: const Color(0xFFF8F8F8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'profile.deleteAccount'.tr,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Color(0xFF151515),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'profile.deleteAccountConfirm'.tr,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Color(0xFF555555),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 50,
+                          child: OutlinedButton(
+                            onPressed: _isDeleteAccountLoading
+                                ? null
+                                : () => Get.back(),
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: Color(0xFFD12D2E)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: Text(
+                              'common.cancel'.tr,
+                              style: const TextStyle(
+                                color: Color(0xFF1F1F1F),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: SizedBox(
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: _isDeleteAccountLoading
+                                ? null
+                                : () async {
+                                    setState(
+                                      () => _isDeleteAccountLoading = true,
+                                    );
+                                    setStateDialog(() {});
+
+                                    final result = await _profileController
+                                        .deleteAccount();
+
+                                    if (!mounted) return;
+
+                                    if (result.ok) {
+                                      await Get.find<AuthorizedPigeon>()
+                                          .logOut();
+                                      Get.offAll(() => const LoginScreen());
+                                    } else {
+                                      setState(
+                                        () =>
+                                            _isDeleteAccountLoading = false,
+                                      );
+                                      setStateDialog(() {});
+                                      Get.snackbar(
+                                        'common.error'.tr,
+                                        result.message,
+                                      );
+                                    }
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: const Color(0xFFD12D2E),
+                              foregroundColor: Colors.white,
+                              disabledBackgroundColor:
+                                  const Color(0xFFE18E8F),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: _isDeleteAccountLoading
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Text(
+                                    'common.delete'.tr,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      barrierDismissible: !_isDeleteAccountLoading,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -353,16 +490,20 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     child: CircularProgressIndicator(color: Colors.white),
                   );
                 }
-                return Column(
-                  children: [
-                    const SizedBox(height: 48),
-                    _buildProfileHeader(),
-                    const SizedBox(height: 40),
-                    _buildMenuItems(),
-                    const SizedBox(height: 60),
-                    _buildLogoutButton(),
-                    const SizedBox(height: 28),
-                  ],
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 48),
+                      _buildProfileHeader(),
+                      const SizedBox(height: 40),
+                      _buildMenuItems(),
+                      const SizedBox(height: 60),
+                      _buildLogoutButton(),
+                      const SizedBox(height: 16),
+                      _buildDeleteAccountButton(),
+                      const SizedBox(height: 28),
+                    ],
+                  ),
                 );
               }),
             ),
@@ -601,6 +742,30 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDeleteAccountButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 52,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: _showDeleteAccountDialog,
+          child: Center(
+            child: Text(
+              'profile.deleteAccount'.tr,
+              style: const TextStyle(
+                color: Color(0xFFD12D2E),
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

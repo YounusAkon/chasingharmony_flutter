@@ -3,8 +3,8 @@
 import 'package:flutter/foundation.dart';
 
 base class ApiEndpoints {
-  static const String socketUrl = _RemoteServer.socketUrl;
-  static const String baseUrl = _RemoteServer.baseUrl;
+  static const String socketUrl = _LocalHostWifi.socketUrl;
+  static const String baseUrl = _LocalHostWifi.baseUrl;
 
   /// ### post
   static const String login = _Auth.login;
@@ -46,6 +46,9 @@ base class ApiEndpoints {
   static String uploadAvatar = _User.uploadAvatar;
   static String userPreferences = _User.preferences;
 
+  /// ### delete
+  static String deleteAccount = _User.deleteAccount;
+
   //---------------------- subscriptions -----------------------------
   static const String subscriptionPlans = _Subscription.plans;
   static const String mySubscription = _Subscription.me;
@@ -67,14 +70,8 @@ class _LocalHostWifi {
 }
 
 class _RemoteServer {
-  static const String socketUrl = String.fromEnvironment(
-    'SOCKET_URL',
-    defaultValue: 'http://187.77.187.56:5012',
-  );
-  static const String baseUrl = String.fromEnvironment(
-    'API_BASE_URL',
-    defaultValue: 'http://187.77.187.56:5012/api/v1',
-  );
+  static const String socketUrl = 'http://187.77.187.56:5012';
+  static const String baseUrl = 'http://187.77.187.56:5012/api/v1';
 }
 
 class _Auth {
@@ -121,11 +118,13 @@ class _User {
   static String updateProfile = '$_userRoute/me';
   static String uploadAvatar = '$_userRoute/me/avatar';
   static String preferences = '$_userRoute/me/preferences';
+  static String deleteAccount = '$_userRoute/me';
 }
 
 // ---------------------- SUBSCRIPTIONS -----------------------------
 class _Subscription {
-  static const String _subscriptionRoute = '${ApiEndpoints.baseUrl}/subscriptions';
+  static const String _subscriptionRoute =
+      '${ApiEndpoints.baseUrl}/subscriptions';
   static const String plans = '$_subscriptionRoute/plans';
   static const String me = '$_subscriptionRoute/me';
   static const String checkout = '$_subscriptionRoute/checkout';

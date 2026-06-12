@@ -60,6 +60,15 @@ class ProfileController extends GetxController {
     isLoading.value = false;
   }
 
+  Future<({bool ok, String message})> deleteAccount() async {
+    final result = await repo.deleteAccount();
+
+    return result.fold(
+      (failure) => (ok: false, message: failure.uiMessage),
+      (success) => (ok: true, message: success.message),
+    );
+  }
+
   void pickDob(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
