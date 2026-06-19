@@ -24,16 +24,16 @@
 		56FD98664C20CE8A5F7358B652BECD7E /* flutter_secure_storage-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 51825E176CBF850A1C41C0B4BA894551 /* flutter_secure_storage-dummy.m */; };
 		7F35898B19881C1CE0B65100F140EABE /* flutter_secure_storage-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D864C79913D5A8481579CDB2E3096E47 /* flutter_secure_storage-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		898AE8C3E44E2345DAEAD5B11FEB1A49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
-		8DA6CF83FBECBDD823728B1AD863A0C8 /* FlutterSecureStoragePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = F69A38FA0003F3AE0F469791B82B6F6A /* FlutterSecureStoragePlugin.m */; };
-		8FA3D968B971C1C6F83C5E2582A9033F /* SwiftFlutterSecureStoragePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA90D346D8DEAC184D13FCFF34FD5DEC /* SwiftFlutterSecureStoragePlugin.swift */; };
-		ABC93FBA6F5F530F358D9A92E0B3DDB6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = D385028D8336D58C0193A2370C01C01D /* PrivacyInfo.xcprivacy */; };
+		8DA6CF83FBECBDD823728B1AD863A0C8 /* FlutterSecureStoragePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4B77F39D48DF3207A1D13B3AB73197 /* FlutterSecureStoragePlugin.m */; };
+		8FA3D968B971C1C6F83C5E2582A9033F /* SwiftFlutterSecureStoragePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA99FA4BC5E9618025305E069249140C /* SwiftFlutterSecureStoragePlugin.swift */; };
+		ABC93FBA6F5F530F358D9A92E0B3DDB6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BFE2572A04F4583DD6FBD939D4A6A256 /* PrivacyInfo.xcprivacy */; };
 		B375EA128E6579366091BAA390BBDD34 /* Pods-RunnerTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3DB54C128E3D88C0C9C7DDEA475ED7 /* Pods-RunnerTests-dummy.m */; };
 		BFED363933B7E5695AABDFF1E355E16A /* Pods-Runner-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 499E3722E8DACDC2AAA6C15AD1796520 /* Pods-Runner-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEBD84922D2CCEF26C272418EC3EB3A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
 		D8203AF03D60E3B7237E39C59F418E53 /* flutter_secure_storage-flutter_secure_storage in Resources */ = {isa = PBXBuildFile; fileRef = E3C330B5F4227ED6FDC9FC042B5115D5 /* flutter_secure_storage-flutter_secure_storage */; };
-		DACB447D658FB7CEE4CDA65714EAB43F /* FlutterSecureStoragePlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5A92A0C3EF23C86D03984889AA387B /* FlutterSecureStoragePlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DACB447D658FB7CEE4CDA65714EAB43F /* FlutterSecureStoragePlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 89F38202E2D7BBC3DE17AA165171BC52 /* FlutterSecureStoragePlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EB2DC96CDCF638AB89007D2DB0F3119A /* Pods-RunnerTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E9B12BCE5540D02A80250C3EC16D399 /* Pods-RunnerTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EDD4406148BF8FB8427AE35A9F47C3A5 /* FlutterSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668D97E48956741CA65FC62CA4C90869 /* FlutterSecureStorage.swift */; };
+		EDD4406148BF8FB8427AE35A9F47C3A5 /* FlutterSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4706F119561A6B68C9C5A9BD86D8E831 /* FlutterSecureStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,9 +81,9 @@
 		0E699B2931D79688A5B815654CDCA4ED /* flutter_secure_storage-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "flutter_secure_storage-Info.plist"; sourceTree = "<group>"; };
 		11AA7018F95317D959D9D2E76CBB2377 /* Pods-RunnerTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RunnerTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		1B136F41D5B5FAE96EA576E768A5771D /* Pods-Runner-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Runner-acknowledgements.plist"; sourceTree = "<group>"; };
-		1E5A92A0C3EF23C86D03984889AA387B /* FlutterSecureStoragePlugin.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FlutterSecureStoragePlugin.h; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Classes/FlutterSecureStoragePlugin.h"; sourceTree = "<group>"; };
 		384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		3ACC91B0A5B4C29133B5C894423F55DD /* flutter_secure_storage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = flutter_secure_storage.release.xcconfig; sourceTree = "<group>"; };
+		4706F119561A6B68C9C5A9BD86D8E831 /* FlutterSecureStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FlutterSecureStorage.swift; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Classes/FlutterSecureStorage.swift"; sourceTree = "<group>"; };
 		499E3722E8DACDC2AAA6C15AD1796520 /* Pods-Runner-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Runner-umbrella.h"; sourceTree = "<group>"; };
 		4D3DB54C128E3D88C0C9C7DDEA475ED7 /* Pods-RunnerTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RunnerTests-dummy.m"; sourceTree = "<group>"; };
 		51825E176CBF850A1C41C0B4BA894551 /* flutter_secure_storage-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "flutter_secure_storage-dummy.m"; sourceTree = "<group>"; };
@@ -91,23 +91,24 @@
 		557BF6D67F01F99270E9736237163105 /* flutter_secure_storage.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = flutter_secure_storage.podspec; path = "../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/flutter_secure_storage.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		5708DC85A5E1F9FFB980DD6503859006 /* Flutter.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = Flutter.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		653092AA26032C9F138F7611E48E8DB4 /* flutter_secure_storage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = flutter_secure_storage.debug.xcconfig; sourceTree = "<group>"; };
-		668D97E48956741CA65FC62CA4C90869 /* FlutterSecureStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FlutterSecureStorage.swift; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Classes/FlutterSecureStorage.swift"; sourceTree = "<group>"; };
 		669E8F25E1897672BDB80B7EB784DA24 /* Pods-Runner */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Runner"; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C3345B1B3CAEDF5B03B1F731FDC492E /* Pods-RunnerTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-RunnerTests"; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		728A5ED1DD60BAC8C8F382A87B976F84 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		773BFCE41424EB8EBB72EF3F6A5FB719 /* Pods-Runner-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Runner-frameworks.sh"; sourceTree = "<group>"; };
 		79F83F4D505FA40C1CD18A8029181D59 /* Pods-RunnerTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RunnerTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		89F38202E2D7BBC3DE17AA165171BC52 /* FlutterSecureStoragePlugin.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FlutterSecureStoragePlugin.h; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Classes/FlutterSecureStoragePlugin.h"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9E4B77F39D48DF3207A1D13B3AB73197 /* FlutterSecureStoragePlugin.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FlutterSecureStoragePlugin.m; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Classes/FlutterSecureStoragePlugin.m"; sourceTree = "<group>"; };
 		9E9B12BCE5540D02A80250C3EC16D399 /* Pods-RunnerTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RunnerTests-umbrella.h"; sourceTree = "<group>"; };
 		AC8FE152530FBDCE460186B326C1A8FB /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		B00A5ECAED4CA0C16FF7C65365BC0334 /* Pods-RunnerTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RunnerTests-Info.plist"; sourceTree = "<group>"; };
 		B0BD57AB3672E53828D11C2A3368023A /* Pods-RunnerTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-RunnerTests.modulemap"; sourceTree = "<group>"; };
 		B703785507B22BAF0B800737429577EC /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		BA99FA4BC5E9618025305E069249140C /* SwiftFlutterSecureStoragePlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftFlutterSecureStoragePlugin.swift; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Classes/SwiftFlutterSecureStoragePlugin.swift"; sourceTree = "<group>"; };
+		BFE2572A04F4583DD6FBD939D4A6A256 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Resources/PrivacyInfo.xcprivacy"; sourceTree = "<group>"; };
 		C1C1AD8C20613ACC67F00155D7BB54AA /* flutter_secure_storage */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = flutter_secure_storage; path = flutter_secure_storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C24C1A035F22D24883C6F1876F274C6F /* Pods-Runner.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Runner.modulemap"; sourceTree = "<group>"; };
 		C50FD10CD19FF6999637BA5ECAF1681B /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
-		CA90D346D8DEAC184D13FCFF34FD5DEC /* SwiftFlutterSecureStoragePlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftFlutterSecureStoragePlugin.swift; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Classes/SwiftFlutterSecureStoragePlugin.swift"; sourceTree = "<group>"; };
-		D385028D8336D58C0193A2370C01C01D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Resources/PrivacyInfo.xcprivacy"; sourceTree = "<group>"; };
 		D864C79913D5A8481579CDB2E3096E47 /* flutter_secure_storage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "flutter_secure_storage-umbrella.h"; sourceTree = "<group>"; };
 		DFD22E50B835D8CAD222ED6FD5F706F0 /* Flutter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter.release.xcconfig; sourceTree = "<group>"; };
 		E3068BCDE3837E2E0114164D9E30038D /* flutter_secure_storage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "flutter_secure_storage-prefix.pch"; sourceTree = "<group>"; };
@@ -117,7 +118,6 @@
 		ECDF6AA713870989438BA93B395DC557 /* Pods-Runner-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Runner-acknowledgements.markdown"; sourceTree = "<group>"; };
 		EF11EF14E44B2EACDDAA3B5E88EB7C84 /* Flutter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flutter.debug.xcconfig; sourceTree = "<group>"; };
 		F0E8DE2DDFB91DB4511414A447FAD658 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = "../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/LICENSE"; sourceTree = "<group>"; };
-		F69A38FA0003F3AE0F469791B82B6F6A /* FlutterSecureStoragePlugin.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FlutterSecureStoragePlugin.m; path = "../../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios/Classes/FlutterSecureStoragePlugin.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,13 +164,13 @@
 			path = Desktop;
 			sourceTree = "<group>";
 		};
-		2972118A52F85B59F103D9FB317BEB2A /* plugins */ = {
+		0C9DA32E7D54F8550229E7490A7AE9DF /* chasingharmony_flutter */ = {
 			isa = PBXGroup;
 			children = (
-				EED84B3BE7EB7629C3ED21E8C8F36F6E /* flutter_secure_storage */,
+				5C4D9C8E49AFF63F17FFC81EDF04117C /* ios */,
 			);
-			name = plugins;
-			path = plugins;
+			name = chasingharmony_flutter;
+			path = chasingharmony_flutter;
 			sourceTree = "<group>";
 		};
 		2DB8426A477BA92773F00012EBA84D53 /* Targets Support Files */ = {
@@ -207,6 +207,25 @@
 			path = "Target Support Files/Pods-RunnerTests";
 			sourceTree = "<group>";
 		};
+		5C4D9C8E49AFF63F17FFC81EDF04117C /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				72A415708DF8008B75F0C80F0C72BE7F /* .symlinks */,
+			);
+			name = ios;
+			path = ios;
+			sourceTree = "<group>";
+		};
+		5FA7A46407144CB0F416616B112AD32F /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				89FADC21A3A9838BBCB6AC2D78A640C1 /* Classes */,
+				9395D0949E426BBE44AF90DD0F3C2ECF /* Resources */,
+			);
+			name = ios;
+			path = ios;
+			sourceTree = "<group>";
+		};
 		60A3540537D5C4E1150957542E346B4E /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,7 +239,7 @@
 		665D79686ED138977B800BDFCA5CFC60 /* FlutterProject1 */ = {
 			isa = PBXGroup;
 			children = (
-				7A7C84F43C6AE05D21AE57F5FEE52497 /* chasingharmony3 */,
+				F29C7C32678E4F41D00A479F9E2103D2 /* chasingharmony3 */,
 			);
 			name = FlutterProject1;
 			path = FlutterProject1;
@@ -235,13 +254,13 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		71559F6B7441B14C508E534BC8B9A8C8 /* .symlinks */ = {
+		6F30D50F19697577DEBDAF1EECF706E8 /* plugins */ = {
 			isa = PBXGroup;
 			children = (
-				2972118A52F85B59F103D9FB317BEB2A /* plugins */,
+				DAD12941252056A1ED025E1DB3EA2209 /* flutter_secure_storage */,
 			);
-			name = .symlinks;
-			path = .symlinks;
+			name = plugins;
+			path = plugins;
 			sourceTree = "<group>";
 		};
 		720FB91315E35A62FD2ED0D1C6438CCF /* .. */ = {
@@ -253,13 +272,13 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		7A7C84F43C6AE05D21AE57F5FEE52497 /* chasingharmony3 */ = {
+		72A415708DF8008B75F0C80F0C72BE7F /* .symlinks */ = {
 			isa = PBXGroup;
 			children = (
-				7F798D6EB88FBFE88E1F7AD4D4999BC7 /* chasingharmony_fluttere */,
+				6F30D50F19697577DEBDAF1EECF706E8 /* plugins */,
 			);
-			name = chasingharmony3;
-			path = chasingharmony3;
+			name = .symlinks;
+			path = .symlinks;
 			sourceTree = "<group>";
 		};
 		7EA95ECBFCBEEB034EEDB59C3DA2F6EC /* .. */ = {
@@ -271,15 +290,6 @@
 			path = "../../../../../../../../../.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4/ios";
 			sourceTree = "<group>";
 		};
-		7F798D6EB88FBFE88E1F7AD4D4999BC7 /* chasingharmony_fluttere */ = {
-			isa = PBXGroup;
-			children = (
-				DA28AC982B405F7C4E97B7D19A523889 /* ios */,
-			);
-			name = chasingharmony_fluttere;
-			path = chasingharmony_fluttere;
-			sourceTree = "<group>";
-		};
 		84D9E14282F995F87FF7D4552A3D606C /* .. */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,6 +297,27 @@
 			);
 			name = ..;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		89FADC21A3A9838BBCB6AC2D78A640C1 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4706F119561A6B68C9C5A9BD86D8E831 /* FlutterSecureStorage.swift */,
+				89F38202E2D7BBC3DE17AA165171BC52 /* FlutterSecureStoragePlugin.h */,
+				9E4B77F39D48DF3207A1D13B3AB73197 /* FlutterSecureStoragePlugin.m */,
+				BA99FA4BC5E9618025305E069249140C /* SwiftFlutterSecureStoragePlugin.swift */,
+			);
+			name = Classes;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		9395D0949E426BBE44AF90DD0F3C2ECF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BFE2572A04F4583DD6FBD939D4A6A256 /* PrivacyInfo.xcprivacy */,
+			);
+			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		AB6BB772111920E9E684540F380AD1A2 /* .. */ = {
@@ -344,18 +375,6 @@
 			);
 			sourceTree = "<group>";
 		};
-		D0E322D312D0FE773D650E94B295DC12 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				668D97E48956741CA65FC62CA4C90869 /* FlutterSecureStorage.swift */,
-				1E5A92A0C3EF23C86D03984889AA387B /* FlutterSecureStoragePlugin.h */,
-				F69A38FA0003F3AE0F469791B82B6F6A /* FlutterSecureStoragePlugin.m */,
-				CA90D346D8DEAC184D13FCFF34FD5DEC /* SwiftFlutterSecureStoragePlugin.swift */,
-			);
-			name = Classes;
-			path = Classes;
-			sourceTree = "<group>";
-		};
 		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,13 +394,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DA28AC982B405F7C4E97B7D19A523889 /* ios */ = {
+		DAD12941252056A1ED025E1DB3EA2209 /* flutter_secure_storage */ = {
 			isa = PBXGroup;
 			children = (
-				71559F6B7441B14C508E534BC8B9A8C8 /* .symlinks */,
+				5FA7A46407144CB0F416616B112AD32F /* ios */,
 			);
-			name = ios;
-			path = ios;
+			name = flutter_secure_storage;
+			path = flutter_secure_storage;
 			sourceTree = "<group>";
 		};
 		E4801F62A6B08CD9B5410329F1A18FDE /* iOS */ = {
@@ -410,15 +429,6 @@
 			path = "Target Support Files/Pods-Runner";
 			sourceTree = "<group>";
 		};
-		EED84B3BE7EB7629C3ED21E8C8F36F6E /* flutter_secure_storage */ = {
-			isa = PBXGroup;
-			children = (
-				F0A40D5995C92CE1A3CE3F17914D49B3 /* ios */,
-			);
-			name = flutter_secure_storage;
-			path = flutter_secure_storage;
-			sourceTree = "<group>";
-		};
 		EEFC90EA6CCF6730EB4E8830D9107F76 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,14 +438,13 @@
 			name = Pod;
 			sourceTree = "<group>";
 		};
-		F0A40D5995C92CE1A3CE3F17914D49B3 /* ios */ = {
+		F29C7C32678E4F41D00A479F9E2103D2 /* chasingharmony3 */ = {
 			isa = PBXGroup;
 			children = (
-				D0E322D312D0FE773D650E94B295DC12 /* Classes */,
-				FBC954CFE5215C8A6456572C9D580E2A /* Resources */,
+				0C9DA32E7D54F8550229E7490A7AE9DF /* chasingharmony_flutter */,
 			);
-			name = ios;
-			path = ios;
+			name = chasingharmony3;
+			path = chasingharmony3;
 			sourceTree = "<group>";
 		};
 		F400DDDCDB2D86AE4ED66B111ABF692A /* flutter_secure_storage */ = {
@@ -447,15 +456,6 @@
 			);
 			name = flutter_secure_storage;
 			path = ../.symlinks/plugins/flutter_secure_storage/ios;
-			sourceTree = "<group>";
-		};
-		FBC954CFE5215C8A6456572C9D580E2A /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D385028D8336D58C0193A2370C01C01D /* PrivacyInfo.xcprivacy */,
-			);
-			name = Resources;
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		FD67168A86379DCEAD2F2DE452FDC505 /* Development Pods */ = {
@@ -752,11 +752,11 @@
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "$(inherited) armv7";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) i386";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64\"",
 					"$(inherited)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
@@ -806,11 +806,11 @@
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "$(inherited) armv7";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) i386";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
 					"$(inherited)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_secure_storage/flutter_secure_storage-prefix.pch";
@@ -861,11 +861,11 @@
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "$(inherited) armv7";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) i386";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64\"",
 					"$(inherited)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_secure_storage/flutter_secure_storage-prefix.pch";
@@ -919,11 +919,11 @@
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "$(inherited) armv7";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) i386";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64\"",
 					"$(inherited)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
@@ -1207,11 +1207,11 @@
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "$(inherited) armv7";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) i386";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
 					"$(inherited)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
@@ -1264,11 +1264,11 @@
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "$(inherited) armv7";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) i386";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
 					"$(inherited)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
@@ -1321,11 +1321,11 @@
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "$(inherited) armv7";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) i386";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
 					"$(inherited)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
@@ -1397,11 +1397,11 @@
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "$(inherited) armv7";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) i386";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
 					"$(inherited)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
@@ -1451,11 +1451,11 @@
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "$(inherited) armv7";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "$(inherited) i386";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64\"",
 					"$(inherited)",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"\"/Users/bdcalling/development/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
+					"\"/opt/homebrew/share/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_secure_storage/flutter_secure_storage-prefix.pch";

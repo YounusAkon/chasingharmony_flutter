@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       /// Bottom Navigation
       body: Stack(
         children: [
-          /// Fixed Background Image
+          /// Fixed Background Image gjg
           Positioned.fill(
             child: Image.asset(
               'assets/image/backgroundimage.png',
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextStyle(
                               color: Color(0xFF9D00FF),
                               fontWeight: FontWeight.w600,
-                              fontSize: 13,
+                              fontSize: 14,
                             ),
                           ),
                         ),
