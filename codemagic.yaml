@@ -10,6 +10,8 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.stelys.chasingharmonyFluttere
       vars:
+        XCODE_SCHEME: Runner
+        XCODE_WORKSPACE: ios/Runner.xcworkspace
         APP_STORE_CONNECT_ISSUER_ID: Encrypted(...)       # replace with your encrypted value
         APP_STORE_CONNECT_KEY_IDENTIFIER: Encrypted(...)  # replace with your encrypted value
         APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(...)     # replace with your encrypted value
