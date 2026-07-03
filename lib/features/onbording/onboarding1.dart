@@ -277,7 +277,7 @@ class _OnboardingPage extends StatelessWidget {
                         text: '${'app.title'.tr} ',
                         style: const TextStyle(
                           color: Color(0xFF8B5CF6),
-                          fontSize: 13,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -285,7 +285,7 @@ class _OnboardingPage extends StatelessWidget {
                         text: data.bodyKey.tr,
                         style: const TextStyle(
                           color: Color(0xFFE3DDED),
-                          fontSize: 13,
+                          fontSize: 14,
                           height: 1.55,
                         ),
                       ),

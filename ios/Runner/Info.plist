@@ -2,6 +2,38 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera so you can take a photo for your profile picture.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library so you can choose an image for your profile picture.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app saves photos you capture to your photo library when you set a profile picture.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app can use the microphone when you record a video with the in-app camera.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is only used to tag photos you capture with the in-app camera. The app does not track your location.</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+		<string>https</string>
+		<string>http</string>
+		<string>mailto</string>
+	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.stelys.chasingharmonyFluttere</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>celysai</string>
+			</array>
+		</dict>
+	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
