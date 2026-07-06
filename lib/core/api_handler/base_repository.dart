@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:app_pigeon/app_pigeon.dart' show AuthorizedPigeon;
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart' hide Response;
 
 import '../services/debug/debug_service.dart';
 import 'exceptions.dart';
@@ -31,6 +33,30 @@ base class BaseRepository {
     }
   }
 
+  /// A 401 that reaches the repository was NOT recovered by the token-refresh
+  /// interceptor, which means the access token is expired/invalid and the
+  /// session can no longer be refreshed. 401s on the auth endpoints
+  /// (login/refresh/etc.) are bad-credentials responses — not expired
+  /// sessions — so they are excluded to keep their own error messages.
+  bool _isExpiredSessionError(DioException e) {
+    if (e.response?.statusCode != 401) return false;
+    final path = e.requestOptions.path.toLowerCase();
+    return !path.contains('/auth');
+  }
+
+  /// Clears the stored auth record. This fires app_pigeon's auth stream with
+  /// [UnAuthenticated], which AppManager listens to and uses to route the user
+  /// back to the login screen. Safe to call repeatedly (idempotent).
+  void _forceLogoutOnExpiredSession() {
+    try {
+      if (Get.isRegistered<AuthorizedPigeon>()) {
+        Get.find<AuthorizedPigeon>().logOut();
+      }
+    } catch (_) {
+      // Never let logout bookkeeping mask the original failure.
+    }
+  }
+
   Future<Either<DataCRUDFailure, T>> asyncTryCatch<T>({
     required Future<T> Function() tryFunc,
   }) async {
@@ -56,6 +82,18 @@ base class BaseRepository {
       );
     } on DioException catch (e) {
       //debugger?.dekhao("DioFailure $e");
+      // Expired/invalid session that the interceptor could not refresh:
+      // clear auth so the app routes back to the login screen.
+      if (_isExpiredSessionError(e)) {
+        _forceLogoutOnExpiredSession();
+        return Left(
+          DataCRUDFailure(
+            failure: Failure.authFailure,
+            uiMessage: 'Your session has expired. Please sign in again.',
+            fullError: 'Unauthorized (401): ${e.toString()}',
+          ),
+        );
+      }
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
           return Left(
